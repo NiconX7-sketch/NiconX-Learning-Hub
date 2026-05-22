@@ -2,21 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>My Dashboard - NiconX Learning Hub</title>
-    <meta name="description" content="Access your revision notes and practice questions for Grade 4-6 Kenyan curriculum.">
-    
-    <!-- TailwindCSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - NiconX Learning Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js"></script>
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: #f3f4f6;
+        }
+        .sidebar-item {
+            transition: all 0.2s ease;
+        }
+        .sidebar-item:hover {
+            background: rgba(255, 107, 53, 0.1);
+            color: #FF6B35;
+        }
+        .sidebar-item.active {
+            background: rgba(255, 107, 53, 0.15);
+            color: #FF6B35;
+            border-left: 3px solid #FF6B35;
+        }
+        .stat-card {
+            transition: transform 0.2s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+    </style>
     
     <script>
         tailwind.config = {
@@ -31,205 +46,595 @@
         }
     </script>
 </head>
-<body class="bg-gray-100">
+<body>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20with%20my%20studies" 
-       target="_blank" 
-       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
-        <i class="fab fa-whatsapp text-2xl"></i>
-    </a>
-
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-40">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center flex-wrap gap-3">
-                <div class="flex items-center space-x-3">
-                    <img src="images/logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
-                    <div>
-                        <h1 class="text-lg font-bold text-secondary">NiconX Learning Hub</h1>
-                        <p class="text-xs text-gray-500" id="timerDisplay">Checking access...</p>
-                    </div>
+    <!-- Admin Header -->
+    <header class="bg-secondary text-white shadow-lg sticky top-0 z-40">
+        <div class="px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-user-shield text-2xl text-primary"></i>
+                <div>
+                    <h1 class="text-xl font-bold">NiconX Content Manager</h1>
+                    <p class="text-xs text-gray-300">Welcome, <span id="adminName">Admin</span></p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-sm font-semibold text-secondary" id="classDisplay"></p>
-                        <button onclick="logout()" class="text-red-500 text-sm hover:text-red-700">
-                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
-                        </button>
-                    </div>
-                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="exportAllData()" class="bg-green-600 px-3 py-2 rounded-lg text-sm hover:bg-green-700 transition">
+                    <i class="fas fa-download mr-1"></i> Backup
+                </button>
+                <button onclick="adminLogout()" class="bg-red-500 px-3 py-2 rounded-lg text-sm hover:bg-red-600 transition">
+                    <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 py-8 max-w-6xl">
-        <!-- Welcome Banner -->
-        <div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-5 mb-8 text-white">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-                <div>
-                    <h2 class="text-xl font-bold">Welcome Back! 👋</h2>
-                    <p class="text-white/80 text-sm">Continue your revision journey. Choose a topic below to start learning.</p>
-                </div>
-                <div class="bg-white/20 rounded-full px-4 py-2">
-                    <i class="fas fa-graduation-cap mr-2"></i>
-                    <span class="text-sm font-semibold" id="sessionStatus">Active Session</span>
-                </div>
-            </div>
-        </div>
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-lg">
+            <nav class="py-4">
+                <a href="#" onclick="showSection('dashboard'); return false;" class="sidebar-item active flex items-center px-6 py-3 text-gray-700 font-medium" id="navDashboard">
+                    <i class="fas fa-chart-line w-5 mr-3"></i> Dashboard
+                </a>
+                <a href="#" onclick="showSection('addContent'); return false;" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navAddContent">
+                    <i class="fas fa-plus-circle w-5 mr-3"></i> Add Content
+                </a>
+                <a href="#" onclick="showSection('manageContent'); return false;" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navManageContent">
+                    <i class="fas fa-database w-5 mr-3"></i> Manage Content
+                </a>
+                <a href="#" onclick="showSection('reviews'); return false;" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navReviews">
+                    <i class="fas fa-star w-5 mr-3"></i> Reviews
+                </a>
+                <a href="#" onclick="showSection('messages'); return false;" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navMessages">
+                    <i class="fas fa-envelope w-5 mr-3"></i> Contact Messages
+                </a>
+            </nav>
+        </aside>
 
-        <!-- Free Trial Notice -->
-        <div id="freeTrialNote" class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-6 hidden">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-                <div class="flex items-center">
-                    <i class="fas fa-gift text-blue-500 text-xl mr-3"></i>
-                    <div>
-                        <p class="font-semibold text-blue-800">You're on Free Trial Mode</p>
-                        <p class="text-sm text-blue-600">Accessing 2 free topics. <a href="payment.html" class="underline font-semibold">Pay 20 KES</a> to unlock all premium content for 8 hours.</p>
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <!-- Dashboard Section -->
+            <div id="dashboardSection">
+                <h2 class="text-2xl font-bold text-secondary mb-6">Dashboard Overview</h2>
+                <div class="grid md:grid-cols-4 gap-5 mb-8">
+                    <div class="stat-card bg-white rounded-xl shadow-md p-5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Topics</p>
+                                <p class="text-3xl font-bold text-secondary" id="totalTopics">0</p>
+                            </div>
+                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-file-alt text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card bg-white rounded-xl shadow-md p-5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-500 text-sm">Free Topics</p>
+                                <p class="text-3xl font-bold text-green-600" id="freeTopics">0</p>
+                            </div>
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-gift text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card bg-white rounded-xl shadow-md p-5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-500 text-sm">Premium Topics</p>
+                                <p class="text-3xl font-bold text-primary" id="premiumTopics">0</p>
+                            </div>
+                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-lock text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card bg-white rounded-xl shadow-md p-5">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Payments</p>
+                                <p class="text-3xl font-bold text-secondary" id="totalPayments">0</p>
+                            </div>
+                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-money-bill-wave text-primary"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <a href="payment.html" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-orange-700">
-                    Upgrade Now
-                </a>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="font-bold text-secondary mb-3">Quick Actions</h3>
+                    <div class="flex gap-3 flex-wrap">
+                        <a href="#" onclick="showSection('addContent'); return false;" class="bg-primary text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-700">
+                            <i class="fas fa-plus mr-1"></i> Add New Topic
+                        </a>
+                        <a href="#" onclick="exportAllData(); return false;" class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-secondary/80">
+                            <i class="fas fa-download mr-1"></i> Export Backup
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <!-- Subjects Grid -->
-        <div id="subjectsContainer" class="grid md:grid-cols-2 gap-6">
-            <div class="col-span-2 text-center py-12">
-                <div class="spinner mx-auto"></d<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>My Dashboard - NiconX Learning Hub</title>
-    <meta name="description" content="Access your revision notes and practice questions for Grade 4-6 Kenyan curriculum.">
-    
-    <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
+            <!-- Add Content Section -->
+            <div id="addContentSection" class="hidden">
+                <h2 class="text-2xl font-bold text-secondary mb-6">Add New Content</h2>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <form id="contentForm">
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Class *</label>
+                                <select id="classLevel" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                                    <option value="">Select Class</option>
+                                    <option value="grade4">Grade 4</option>
+                                    <option value="grade5">Grade 5</option>
+                                    <option value="grade6">Grade 6</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Subject *</label>
+                                <select id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                                    <option value="">Select Subject</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="English">English</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Social Studies">Social Studies</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-semibold mb-2">Topic Title *</label>
+                            <input type="text" id="topic" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="e.g., Addition of Whole Numbers" required>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Display Order</label>
+                                <input type="number" id="topicOrder" class="w-32 px-4 py-2 border border-gray-300 rounded-lg" value="1" min="1">
+                            </div>
+                            <div>
+                                <label class="flex items-center mt-7">
+                                    <input type="checkbox" id="isFree" class="mr-2 w-5 h-5 text-primary">
+                                    <span class="font-semibold text-gray-700">Make this topic FREE (for trial)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-semibold mb-2">Notes (HTML) *</label>
+                            <textarea id="notesEditor" rows="12" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Use the toolbar to format text and add images. For images, use image URLs from Unsplash or other free sources.</p>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-semibold mb-2">Practice Questions</label>
+                            <div id="questionsContainer">
+                                <div class="question-item border rounded-lg p-4 mb-3 bg-gray-50">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h4 class="font-semibold">Question 1</h4>
+                                        <button type="button" onclick="removeQuestion(this)" class="text-red-500 text-sm">Remove</button>
+                                    </div>
+                                    <input type="text" class="question-text w-full px-3 py-2 border rounded-lg mb-2" placeholder="Question text">
+                                    <select class="question-type w-full px-3 py-2 border rounded-lg mb-2" onchange="toggleOptions(this)">
+                                        <option value="mcq">Multiple Choice</option>
+                                        <option value="short">Short Answer</option>
+                                    </select>
+                                    <div class="mcq-options">
+                                        <input type="text" class="option w-full px-3 py-2 border rounded-lg mb-1" placeholder="Option A">
+                                        <input type="text" class="option w-full px-3 py-2 border rounded-lg mb-1" placeholder="Option B">
+                                        <input type="text" class="option w-full px-3 py-2 border rounded-lg mb-1" placeholder="Option C">
+                                        <input type="text" class="option w-full px-3 py-2 border rounded-lg mb-1" placeholder="Option D">
+                                        <input type="text" class="correct-answer w-full px-3 py-2 border rounded-lg mt-2" placeholder="Correct answer (exact text)">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addQuestion()" class="mt-2 text-primary font-semibold">
+                                <i class="fas fa-plus-circle"></i> Add Another Question
+                            </button>
+                        </div>
+
+                        <div class="flex gap-3 mt-6">
+                            <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-700">Publish Content</button>
+                            <button type="reset" class="border border-gray-300 px-6 py-2 rounded-lg font-semibold">Clear</button>
+                        </div>
+                    </form>
+                    <div id="messageBox" class="mt-4 hidden"></div>
+                </div>
+            </div>
+
+            <!-- Manage Content Section -->
+            <div id="manageContentSection" class="hidden">
+                <h2 class="text-2xl font-bold text-secondary mb-6">Manage Content</h2>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="grid md:grid-cols-2 gap-4 mb-6">
+                        <select id="filterClass" class="px-4 py-2 border rounded-lg" onchange="loadContentList()">
+                            <option value="">All Classes</option>
+                            <option value="grade4">Grade 4</option>
+                            <option value="grade5">Grade 5</option>
+                            <option value="grade6">Grade 6</option>
+                        </select>
+                        <select id="filterSubject" class="px-4 py-2 border rounded-lg" onchange="loadContentList()">
+                            <option value="">All Subjects</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="English">English</option>
+                            <option value="Science">Science</option>
+                            <option value="Social Studies">Social Studies</option>
+                        </select>
+                    </div>
+                    <div id="contentList" class="space-y-3">
+                        <div class="text-center text-gray-500 py-8">Loading content...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div id="reviewsSection" class="hidden">
+                <h2 class="text-2xl font-bold text-secondary mb-6">Manage Reviews</h2>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div id="reviewsList" class="space-y-3">
+                        <div class="text-center text-gray-500 py-8">Loading reviews...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Messages Section -->
+            <div id="messagesSection" class="hidden">
+                <h2 class="text-2xl font-bold text-secondary mb-6">Contact Messages</h2>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div id="messagesList" class="space-y-3">
+                        <div class="text-center text-gray-500 py-8">Loading messages...</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/supabase-client.js"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#FF6B35',
-                        secondary: '#1A3A5F',
-                    }
-                }
+        // Supabase configuration
+        const SUPABASE_URL = 'https://pqzxjqokyaxdxqilbaoo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxenhqcW9reWF4ZHhxaWxiYW9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0Mjc1ODksImV4cCI6MjA5NTAwMzU4OX0.7tYky-gjsrHLDkOt68diB1CjmSnI92tpNgjg505nNdM';
+        const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let questions = [];
+
+        // Check admin auth
+        function checkAdminAuth() {
+            const isLoggedIn = localStorage.getItem('adminLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            } else {
+                document.getElementById('adminName').textContent = localStorage.getItem('adminUsername') || 'Admin';
             }
         }
-    </script>
-</head>
-<body class="bg-gray-100">
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20with%20my%20studies" 
-       target="_blank" 
-       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
-        <i class="fab fa-whatsapp text-2xl"></i>
-    </a>
+        function adminLogout() {
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminUsername');
+            window.location.href = 'login.html';
+        }
 
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-40">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center flex-wrap gap-3">
-                <div class="flex items-center space-x-3">
-                    <img src="images/logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
-                    <div>
-                        <h1 class="text-lg font-bold text-secondary">NiconX Learning Hub</h1>
-                        <p class="text-xs text-gray-500" id="timerDisplay">Checking access...</p>
-                    </div>
+        // TinyMCE initialization
+        tinymce.init({
+            selector: '#notesEditor',
+            height: 400,
+            menubar: true,
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image link | preview code',
+            images_upload_handler: function(blobInfo, progress) {
+                return new Promise((resolve) => {
+                    const url = prompt('Enter image URL:', 'https://placehold.co/600x400/FF6B35/white?text=Image');
+                    resolve(url);
+                });
+            }
+        });
+
+        // Question functions
+        function addQuestion() {
+            const container = document.getElementById('questionsContainer');
+            const questionDiv = document.createElement('div');
+            const questionCount = container.children.length + 1;
+            questionDiv.className = 'question-item border rounded-lg p-4 mb-3 bg-gray-50';
+            questionDiv.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <h4 class="font-semibold">Question ${questionCount}</h4>
+                    <button type="button" onclick="removeQuestion(this)" class="text-red-500 text-sm">Remove</button>
                 </div>
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-sm font-semibold text-secondary" id="classDisplay"></p>
-                        <button onclick="logout()" class="text-red-500 text-sm hover:text-red-700">
-                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                <input type="text" class="question-text w-full px-3 py-2 border rounded-lg mb-2" placeholder="Question text">
+                <select class="question-type w-full px-3 py-2 border rounded-lg mb-2" onchange="toggleOptions(this)">
+                    <option value="mcq">Multiple Choice</option>
+                    <option value="short">Short Answer</option>
+                </select>
+                <div class="mcq-options">
+                    <input type="text" class="option w-full px-3 py-2 border rounded-lg mb-1" placeholder="Option A">
+                    <input type="text" class="option w-full px-3 py-2 border rounded-lg mb-1" placeholder="Option B">
+                    <input type="text" class="option w-full px-3 py-2 border rounded-lg mb-1" placeholder="Option C">
+                    <input type="text" class="option w-full px-3 py-2 border rounded-lg mb-1" placeholder="Option D">
+                    <input type="text" class="correct-answer w-full px-3 py-2 border rounded-lg mt-2" placeholder="Correct answer (exact text)">
+                </div>
+            `;
+            container.appendChild(questionDiv);
+        }
+
+        function removeQuestion(btn) {
+            btn.closest('.question-item').remove();
+            const questions = document.querySelectorAll('.question-item');
+            questions.forEach((q, idx) => {
+                q.querySelector('h4').textContent = `Question ${idx + 1}`;
+            });
+        }
+
+        function toggleOptions(select) {
+            const optionsDiv = select.closest('.question-item').querySelector('.mcq-options');
+            if (select.value === 'short') {
+                optionsDiv.style.display = 'none';
+            } else {
+                optionsDiv.style.display = 'block';
+            }
+        }
+
+        // Submit content to Supabase
+        document.getElementById('contentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publishing...';
+            submitBtn.disabled = true;
+            
+            // Collect questions
+            const questionsData = [];
+            const questionItems = document.querySelectorAll('.question-item');
+            questionItems.forEach(item => {
+                const type = item.querySelector('.question-type').value;
+                const questionText = item.querySelector('.question-text').value;
+                if (questionText) {
+                    if (type === 'mcq') {
+                        const options = Array.from(item.querySelectorAll('.option')).map(opt => opt.value).filter(opt => opt);
+                        const answer = item.querySelector('.correct-answer').value;
+                        questionsData.push({ type: 'mcq', question: questionText, options, answer });
+                    } else {
+                        const answer = item.querySelector('.correct-answer').value;
+                        questionsData.push({ type: 'short', question: questionText, answer });
+                    }
+                }
+            });
+            
+            const contentData = {
+                class_level: document.getElementById('classLevel').value,
+                subject: document.getElementById('subject').value,
+                topic: document.getElementById('topic').value,
+                topic_order: parseInt(document.getElementById('topicOrder').value) || 1,
+                notes: tinymce.get('notesEditor').getContent(),
+                questions: questionsData,
+                is_free: document.getElementById('isFree').checked,
+                created_at: new Date().toISOString()
+            };
+            
+            if (!contentData.class_level || !contentData.subject || !contentData.topic) {
+                showMessage('Please fill in all required fields', 'error');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('content')
+                    .insert([contentData]);
+                
+                if (error) throw error;
+                
+                showMessage('Content published successfully!', 'success');
+                document.getElementById('contentForm').reset();
+                tinymce.get('notesEditor').setContent('');
+                document.getElementById('questionsContainer').innerHTML = '';
+                addQuestion();
+                loadAdminStats();
+                loadContentList();
+                
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+            
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        });
+
+        function showMessage(msg, type) {
+            const msgBox = document.getElementById('messageBox');
+            msgBox.className = `mt-4 p-3 rounded-lg ${type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
+            msgBox.innerHTML = msg;
+            msgBox.classList.remove('hidden');
+            setTimeout(() => msgBox.classList.add('hidden'), 3000);
+        }
+
+        // Load admin stats
+        async function loadAdminStats() {
+            const { data: content } = await supabase.from('content').select('*');
+            const { data: payments } = await supabase.from('payment_sessions').select('*');
+            
+            if (content) {
+                document.getElementById('totalTopics').textContent = content.length;
+                document.getElementById('freeTopics').textContent = content.filter(c => c.is_free).length;
+                document.getElementById('premiumTopics').textContent = content.filter(c => !c.is_free).length;
+            }
+            if (payments) {
+                document.getElementById('totalPayments').textContent = payments.length;
+            }
+        }
+
+        // Load content list
+        async function loadContentList() {
+            const filterClass = document.getElementById('filterClass').value;
+            const filterSubject = document.getElementById('filterSubject').value;
+            const container = document.getElementById('contentList');
+            
+            let query = supabase.from('content').select('*').order('created_at', { ascending: false });
+            if (filterClass) query = query.eq('class_level', filterClass);
+            if (filterSubject) query = query.eq('subject', filterSubject);
+            
+            const { data, error } = await query;
+            
+            if (error || !data || data.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-8">No content found. Add some!</div>';
+                return;
+            }
+            
+            container.innerHTML = data.map(content => `
+                <div class="border rounded-lg p-4 hover:shadow-md transition bg-white">
+                    <div class="flex justify-between items-start flex-wrap gap-2">
+                        <div class="flex-1">
+                            <div class="flex gap-2 mb-2 flex-wrap">
+                                <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">${content.class_level.toUpperCase()}</span>
+                                <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">${content.subject}</span>
+                                ${content.is_free ? '<span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-600"><i class="fas fa-gift"></i> Free</span>' : '<span class="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary"><i class="fas fa-lock"></i> Premium</span>'}
+                            </div>
+                            <h3 class="font-bold text-secondary">${escapeHtml(content.topic)}</h3>
+                            <p class="text-xs text-gray-400 mt-1">${content.questions ? content.questions.length : 0} questions | Created: ${new Date(content.created_at).toLocaleDateString()}</p>
+                        </div>
+                        <button onclick="deleteContent('${content.id}')" class="text-red-500 hover:text-red-700 p-2">
+                            <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </header>
+            `).join('');
+        }
 
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 py-8 max-w-6xl">
-        <!-- Welcome Banner -->
-        <div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-5 mb-8 text-white">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-                <div>
-                    <h2 class="text-xl font-bold">Welcome Back! 👋</h2>
-                    <p class="text-white/80 text-sm">Continue your revision journey. Choose a topic below to start learning.</p>
-                </div>
-                <div class="bg-white/20 rounded-full px-4 py-2">
-                    <i class="fas fa-graduation-cap mr-2"></i>
-                    <span class="text-sm font-semibold" id="sessionStatus">Active Session</span>
-                </div>
-            </div>
-        </div>
+        async function deleteContent(id) {
+            if (!confirm('Delete this content permanently?')) return;
+            const { error } = await supabase.from('content').delete().eq('id', id);
+            if (error) {
+                alert('Error deleting');
+            } else {
+                loadContentList();
+                loadAdminStats();
+                showMessage('Content deleted', 'success');
+            }
+        }
 
-        <!-- Free Trial Notice -->
-        <div id="freeTrialNote" class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-6 hidden">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-                <div class="flex items-center">
-                    <i class="fas fa-gift text-blue-500 text-xl mr-3"></i>
-                    <div>
-                        <p class="font-semibold text-blue-800">You're on Free Trial Mode</p>
-                        <p class="text-sm text-blue-600">Accessing 2 free topics. <a href="payment.html" class="underline font-semibold">Pay 20 KES</a> to unlock all premium content for 8 hours.</p>
+        // Load reviews
+        function loadReviews() {
+            const reviews = JSON.parse(localStorage.getItem('niconx_reviews') || '[]');
+            const container = document.getElementById('reviewsList');
+            if (reviews.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-8">No reviews yet.</div>';
+                return;
+            }
+            container.innerHTML = reviews.map(review => `
+                <div class="border rounded-lg p-4 bg-white">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="text-primary mb-1">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                            <p class="text-gray-700">"${escapeHtml(review.comment)}"</p>
+                            <p class="text-sm text-gray-500 mt-2">— ${escapeHtml(review.name)}</p>
+                            <p class="text-xs text-gray-400">${new Date(review.date).toLocaleDateString()}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            ${!review.approved ? `<button onclick="approveReview('${review.id}')" class="bg-green-500 text-white px-3 py-1 rounded text-sm">Approve</button>` : '<span class="text-green-500 text-sm">Approved</span>'}
+                            <button onclick="deleteReview('${review.id}')" class="text-red-500"><i class="fas fa-trash"></i></button>
+                        </div>
                     </div>
                 </div>
-                <a href="payment.html" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-orange-700">
-                    Upgrade Now
-                </a>
-            </div>
-        </div>
+            `).join('');
+        }
 
-        <!-- Subjects Grid -->
-        <div id="subjectsContainer" class="grid md:grid-cols-2 gap-6">
-            <div class="col-span-2 text-center py-12">
-                <div class="spinner mx-auto"></div>
-                <p class="text-gray-500 mt-4">Loading your topics...</p>
-            </div>
-        </div>
-    </div>
+        function approveReview(id) {
+            let reviews = JSON.parse(localStorage.getItem('niconx_reviews') || '[]');
+            reviews = reviews.map(r => r.id === id ? { ...r, approved: true } : r);
+            localStorage.setItem('niconx_reviews', JSON.stringify(reviews));
+            loadReviews();
+        }
 
-    <!-- Footer -->
-    <footer class="bg-white border-t mt-12 py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p class="text-sm text-gray-500">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
-        </div>
-    </footer>
+        function deleteReview(id) {
+            let reviews = JSON.parse(localStorage.getItem('niconx_reviews') || '[]');
+            reviews = reviews.filter(r => r.id !== id);
+            localStorage.setItem('niconx_reviews', JSON.stringify(reviews));
+            loadReviews();
+        }
 
-    <script src="js/supabase-client.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/content.js"></script>
-</body>
-</html>iv>
-                <p class="text-gray-500 mt-4">Loading your topics...</p>
-            </div>
-        </div>
-    </div>
+        // Load contact messages
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+            const container = document.getElementById('messagesList');
+            if (messages.length === 0) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-8">No messages yet.</div>';
+                return;
+            }
+            container.innerHTML = messages.map(msg => `
+                <div class="border rounded-lg p-4 bg-white">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <div class="flex gap-2 mb-2 flex-wrap">
+                                <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">${escapeHtml(msg.subject)}</span>
+                                <span class="text-xs px-2 py-1 rounded-full ${msg.status === 'unread' ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'}">${msg.status}</span>
+                            </div>
+                            <p class="font-semibold">${escapeHtml(msg.name)}</p>
+                            <p class="text-sm text-gray-600">📞 ${msg.phone} ${msg.email ? '| ✉️ ' + msg.email : ''}</p>
+                            <p class="text-gray-700 mt-2">${escapeHtml(msg.message)}</p>
+                            <p class="text-xs text-gray-400 mt-2">${new Date(msg.date).toLocaleString()}</p>
+                        </div>
+                        <button onclick="markMessageRead('${msg.id}')" class="text-green-500 ml-3"><i class="fas fa-check-circle"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-    <!-- Footer -->
-    <footer class="bg-white border-t mt-12 py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p class="text-sm text-gray-500">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
-        </div>
-    </footer>
+        function markMessageRead(id) {
+            let messages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+            messages = messages.map(m => m.id == id ? { ...m, status: 'read' } : m);
+            localStorage.setItem('contact_messages', JSON.stringify(messages));
+            loadMessages();
+        }
 
-    <script src="js/supabase-client.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/content.js"></script>
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function exportAllData() {
+            const data = {
+                content: JSON.parse(localStorage.getItem('niconx_content') || '[]'),
+                reviews: JSON.parse(localStorage.getItem('niconx_reviews') || '[]'),
+                messages: JSON.parse(localStorage.getItem('contact_messages') || '[]')
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `niconx_backup_${new Date().toISOString().slice(0,19)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Section navigation
+        function showSection(section) {
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('addContentSection').classList.add('hidden');
+            document.getElementById('manageContentSection').classList.add('hidden');
+            document.getElementById('reviewsSection').classList.add('hidden');
+            document.getElementById('messagesSection').classList.add('hidden');
+            
+            document.getElementById(`${section}Section`).classList.remove('hidden');
+            
+            ['navDashboard', 'navAddContent', 'navManageContent', 'navReviews', 'navMessages'].forEach(id => {
+                document.getElementById(id).classList.remove('active', 'text-primary', 'bg-primary/15');
+                document.getElementById(id).classList.add('text-gray-600');
+            });
+            document.getElementById(`nav${section.charAt(0).toUpperCase() + section.slice(1)}`).classList.add('active', 'text-primary', 'bg-primary/15');
+            
+            if (section === 'manageContent') loadContentList();
+            if (section === 'reviews') loadReviews();
+            if (section === 'messages') loadMessages();
+            if (section === 'dashboard') loadAdminStats();
+        }
+
+        // Initialize
+        checkAdminAuth();
+        loadAdminStats();
+        addQuestion();
+    </script>
 </body>
 </html>
