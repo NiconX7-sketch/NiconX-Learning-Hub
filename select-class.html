@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Class - NiconX Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#1A3A5F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header with Logo -->
+        <div class="text-center mb-8">
+            <img src="images/logo.png" alt="NiconX Logo" class="h-16 mx-auto mb-2">
+            <h1 class="text-2xl font-bold text-secondary">Choose Your Class</h1>
+            <p class="text-gray-600">Select the grade you want to study</p>
+        </div>
+
+        <!-- Class Cards -->
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Grade 4 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                <div class="bg-primary p-4 text-white text-center">
+                    <h2 class="text-2xl font-bold">Grade 4</h2>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-2 mb-6">
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Mathematics</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> English</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Science</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Social Studies</li>
+                    </ul>
+                    <button onclick="selectClass('grade4')" class="w-full bg-secondary text-white py-2 rounded-lg font-semibold hover:bg-secondary/90">
+                        Select Grade 4
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grade 5 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                <div class="bg-primary p-4 text-white text-center">
+                    <h2 class="text-2xl font-bold">Grade 5</h2>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-2 mb-6">
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Mathematics</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> English</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Science</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Social Studies</li>
+                    </ul>
+                    <button onclick="selectClass('grade5')" class="w-full bg-secondary text-white py-2 rounded-lg font-semibold hover:bg-secondary/90">
+                        Select Grade 5
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grade 6 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                <div class="bg-primary p-4 text-white text-center">
+                    <h2 class="text-2xl font-bold">Grade 6</h2>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-2 mb-6">
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Mathematics</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> English</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Science</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Social Studies</li>
+                    </ul>
+                    <button onclick="selectClass('grade6')" class="w-full bg-secondary text-white py-2 rounded-lg font-semibold hover:bg-secondary/90">
+                        Select Grade 6
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Free Trial Notice -->
+        <div class="mt-8 text-center">
+            <p class="text-gray-500"><i class="fas fa-info-circle"></i> First 2 topics are FREE to try!</p>
+            <a href="index.html" class="text-primary mt-4 inline-block">&larr; Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        function selectClass(grade) {
+            // Save selected class to localStorage
+            localStorage.setItem('selectedClass', grade);
+            // Check if user wants free trial (from URL param)
+            const urlParams = new URLSearchParams(window.location.search);
+            const isFree = urlParams.get('free') === 'true';
+            
+            if (isFree) {
+                window.location.href = `dashboard.html?free=true&class=${grade}`;
+            } else {
+                window.location.href = 'payment.html';
+            }
+        }
+    </script>
+</body>
+</html>

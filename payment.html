@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay 20 KES - NiconX Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#1A3A5F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-md">
+        <div class="text-center mb-6">
+            <img src="images/logo.png" alt="NiconX Logo" class="h-12 mx-auto mb-2">
+            <h1 class="text-2xl font-bold text-secondary">Pay 20 KES</h1>
+            <p class="text-gray-600">Get 8 hours access to <span id="selectedClassDisplay"></span></p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <div class="bg-primary/10 p-4 rounded-lg mb-6 text-center">
+                <i class="fas fa-clock text-primary text-3xl mb-2"></i>
+                <p class="font-semibold">⏰ 8 Hours Access</p>
+                <p class="text-sm text-gray-600">Unlimited reading & practice questions</p>
+            </div>
+
+            <form id="paymentForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">
+                        <i class="fas fa-phone-alt mr-2"></i> M-Pesa Phone Number
+                    </label>
+                    <input type="tel" id="phone" placeholder="0712345678" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+                           required>
+                    <p class="text-xs text-gray-500 mt-1">Enter the M-Pesa registered number</p>
+                </div>
+
+                <button type="submit" id="payBtn" 
+                        class="w-full bg-primary text-white py-3 rounded-lg font-bold text-lg hover:bg-orange-700 transition">
+                    <i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa
+                </button>
+            </form>
+
+            <div id="paymentStatus" class="mt-4 hidden"></div>
+
+            <p class="text-center text-xs text-gray-400 mt-6">
+                You'll receive an M-Pesa prompt. Enter PIN to complete.
+            </p>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="select-class.html" class="text-primary">&larr; Change Class</a>
+        </div>
+    </div>
+
+    <script src="js/payment.js"></script>
+    <script>
+        // Display selected class
+        const selectedClass = localStorage.getItem('selectedClass');
+        const classDisplay = document.getElementById('selectedClassDisplay');
+        if (selectedClass) {
+            classDisplay.textContent = selectedClass.toUpperCase().replace('grade', 'Grade ');
+        } else {
+            window.location.href = 'select-class.html';
+        }
+    </script>
+</body>
+</html>

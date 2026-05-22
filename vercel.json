@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.6.0"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ],
+  "env": {
+    "MPESA_CONSUMER_KEY": "@mpesa_consumer_key",
+    "MPESA_CONSUMER_SECRET": "@mpesa_consumer_secret",
+    "MPESA_PASSKEY": "@mpesa_passkey",
+    "SUPABASE_URL": "@supabase_url",
+    "SUPABASE_ANON_KEY": "@supabase_anon_key"
+  }
+}
