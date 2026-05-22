@@ -17,12 +17,6 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Supabase Client -->
-    <script src="js/supabase-client.js"></script>
-    
     <script>
         tailwind.config = {
             theme: {
@@ -35,9 +29,15 @@
             }
         }
     </script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #1A3A5F 0%, #FF6B35 100%);
+            min-height: 100vh;
+        }
+    </style>
 </head>
-<body class="min-h-screen"
-    style="background: linear-gradient(135deg, #1A3A5F 0%, #FF6B35 100%);">
+<body>
 
     <!-- WhatsApp Button -->
     <a href="https://wa.me/254110049657?text=Payment%20Help" 
@@ -116,10 +116,14 @@
         </div>
     </div>
 
-    <!-- Payment JS (contains all validation functions internally) -->
+    <!-- Supabase Client -->
+    <script src="js/supabase-client.js"></script>
+    
+    <!-- Payment JS (self-contained with all functions) -->
     <script src="js/payment.js"></script>
     
     <script>
+        // Display selected class
         const selectedClass = localStorage.getItem('selectedClass');
         const classDisplay = document.getElementById('selectedClassDisplay');
         if (selectedClass && selectedClass !== 'null') {
