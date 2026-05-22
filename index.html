@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>NiconX Learning Hub | Learn. Practice. Shine. | Kenya's Best Revision Platform</title>
     <meta name="description" content="Affordable revision for Grade 4-6 Kenyan curriculum. Pay 20 KES for 8 hours access. Notes, practice questions, and progress tracking.">
-    <meta name="keywords" content="Kenya revision, CBC notes, Grade 4, Grade 5, Grade 6, KCPE preparation, M-Pesa payment">
+    <meta name="keywords" content="Kenya revision, CBC notes, Grade 4, Grade 5, Grade 6, KCPE preparation, M-Pesa payment, KCSE revision">
     <meta name="author" content="NiconX Learning Hub">
     <meta name="copyright" content="2026 NiconX Learning Hub">
     
-    <!-- TailwindCSS CDN -->
+    <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 (Professional Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -34,32 +37,45 @@
         }
     </script>
 </head>
-<body>
+<body class="bg-gray-50">
 
-    <!-- Header with Logo -->
-    <header class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50">
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20with%20my%20revision" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50"
+       style="box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center flex-wrap gap-3">
                 <div class="flex items-center space-x-3">
-                    <img src="images/logo.png" alt="NiconX Learning Hub Logo" class="h-12 w-auto md:h-14">
+                    <img src="images/logo.png" alt="NiconX Learning Hub Logo" class="h-12 w-auto md:h-14" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
                     <div>
                         <h1 class="text-xl md:text-2xl font-bold text-secondary">NiconX Learning Hub</h1>
                         <p class="text-xs md:text-sm text-primary font-semibold">Learn. Practice. Shine.</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <a href="select-class.html" class="btn-primary text-sm md:text-base">Start Learning <i class="fas fa-arrow-right ml-2"></i></a>
-                </div>
+                <nav class="flex items-center space-x-4 text-sm">
+                    <a href="index.html" class="text-secondary hover:text-primary font-semibold">Home</a>
+                    <a href="select-class.html" class="text-secondary hover:text-primary">Classes</a>
+                    <a href="about.html" class="text-secondary hover:text-primary">About</a>
+                    <a href="contact.html" class="btn-primary text-sm py-2 px-4">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section with Animation -->
-    <section class="relative overflow-hidden py-16 md:py-24">
-        <div class="container mx-auto px-4">
+    <!-- Hero Section with Unsplash Background -->
+    <section class="relative overflow-hidden py-20 md:py-28"
+        style="background: linear-gradient(rgba(26, 58, 95, 0.85), rgba(26, 58, 95, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format') center/cover fixed;">
+        
+        <div class="container mx-auto px-4 relative z-10">
             <div class="text-center" data-aos="fade-up">
-                <div class="inline-block bg-primary/20 backdrop-blur-sm rounded-full px-4 py-1 mb-4">
-                    <span class="text-primary font-semibold text-sm">🇰🇪 Kenya's #1 Affordable Revision Platform</span>
+                <div class="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 mb-4">
+                    <span class="text-white font-semibold text-sm">🇰🇪 Kenya's #1 Affordable Revision Platform</span>
                 </div>
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">
                     Smart Revision <br>
@@ -69,65 +85,65 @@
                     Grade 4, 5 & 6 • Kenyan Curriculum • Notes + Practice Questions • Only 20 KES
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="select-class.html" class="btn-primary text-lg pulse">
+                    <a href="select-class.html" class="bg-white text-primary px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition inline-block">
                         <i class="fas fa-graduation-cap mr-2"></i> Start Learning Now
                     </a>
-                    <a href="#how-it-works" class="btn-secondary text-lg">
+                    <a href="#how-it-works" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white/10 transition inline-block">
                         <i class="fas fa-play mr-2"></i> How It Works
                     </a>
                 </div>
                 
                 <!-- Stats -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-3xl mx-auto">
-                    <div class="glass-card p-4 text-center">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                         <div class="text-2xl md:text-3xl font-bold text-primary">20 KES</div>
-                        <div class="text-sm text-gray-600">8 Hours Access</div>
+                        <div class="text-sm text-white">8 Hours Access</div>
                     </div>
-                    <div class="glass-card p-4 text-center">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                         <div class="text-2xl md:text-3xl font-bold text-primary">500+</div>
-                        <div class="text-sm text-gray-600">Practice Questions</div>
+                        <div class="text-sm text-white">Practice Questions</div>
                     </div>
-                    <div class="glass-card p-4 text-center">
-                        <div class="text-2xl md:text-3xl font-bold text-primary">4</div>
-                        <div class="text-sm text-gray-600">Subjects</div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+                        <div class="text-2xl md:text-3xl font-bold text-primary">8</div>
+                        <div class="text-sm text-white">Subjects</div>
                     </div>
-                    <div class="glass-card p-4 text-center">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
                         <div class="text-2xl md:text-3xl font-bold text-primary">24/7</div>
-                        <div class="text-sm text-gray-600">Access</div>
+                        <div class="text-sm text-white">Access</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="py-16">
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-secondary mb-12" data-aos="fade-up">
                 How <span class="text-primary">NiconX</span> Works
             </h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card p-6 text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="subject-icon mx-auto mb-4">
-                        <i class="fas fa-mobile-alt text-3xl"></i>
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-tablet-alt text-3xl text-primary"></i>
                     </div>
-                    <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">1</div>
+                    <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">1</div>
                     <h3 class="text-xl font-bold text-secondary mb-2">Select Your Class</h3>
                     <p class="text-gray-600">Choose Grade 4, 5, or 6 and pick your subject</p>
                 </div>
-                <div class="glass-card p-6 text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="subject-icon mx-auto mb-4">
-                        <i class="fas fa-money-bill-wave text-3xl"></i>
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-money-bill-wave text-3xl text-primary"></i>
                     </div>
-                    <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">2</div>
+                    <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">2</div>
                     <h3 class="text-xl font-bold text-secondary mb-2">Pay 20 KES via M-Pesa</h3>
                     <p class="text-gray-600">Instant STK Push to your phone. Get 8 hours access</p>
                 </div>
-                <div class="glass-card p-6 text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div class="subject-icon mx-auto mb-4">
-                        <i class="fas fa-graduation-cap text-3xl"></i>
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-chalkboard-user text-3xl text-primary"></i>
                     </div>
-                    <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">3</div>
+                    <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold">3</div>
                     <h3 class="text-xl font-bold text-secondary mb-2">Learn & Practice</h3>
                     <p class="text-gray-600">Read notes, answer questions, track your progress</p>
                 </div>
@@ -135,39 +151,39 @@
         </div>
     </section>
 
-    <!-- Subjects Preview Section -->
-    <section class="py-16">
+    <!-- Subjects Preview -->
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-secondary mb-12" data-aos="fade-up">
                 What You'll <span class="text-primary">Learn</span>
             </h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="subject-card" data-aos="flip-left" data-aos-delay="100">
-                    <div class="subject-icon">
-                        <i class="fas fa-calculator"></i>
+                <div class="subject-card">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-chart-line text-2xl text-primary"></i>
                     </div>
-                    <h3 class="font-bold text-secondary text-lg">Mathematics</h3>
+                    <h3 class="font-bold text-secondary">Mathematics</h3>
                     <p class="text-xs text-gray-500 mt-1">Numbers, Algebra, Geometry</p>
                 </div>
-                <div class="subject-card" data-aos="flip-left" data-aos-delay="200">
-                    <div class="subject-icon">
-                        <i class="fas fa-book"></i>
+                <div class="subject-card">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-book-open text-2xl text-primary"></i>
                     </div>
-                    <h3 class="font-bold text-secondary text-lg">English</h3>
+                    <h3 class="font-bold text-secondary">English</h3>
                     <p class="text-xs text-gray-500 mt-1">Grammar, Reading, Writing</p>
                 </div>
-                <div class="subject-card" data-aos="flip-left" data-aos-delay="300">
-                    <div class="subject-icon">
-                        <i class="fas fa-flask"></i>
+                <div class="subject-card">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-microscope text-2xl text-primary"></i>
                     </div>
-                    <h3 class="font-bold text-secondary text-lg">Science</h3>
+                    <h3 class="font-bold text-secondary">Science</h3>
                     <p class="text-xs text-gray-500 mt-1">Biology, Physics, Chemistry</p>
                 </div>
-                <div class="subject-card" data-aos="flip-left" data-aos-delay="400">
-                    <div class="subject-icon">
-                        <i class="fas fa-globe-africa"></i>
+                <div class="subject-card">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-landmark text-2xl text-primary"></i>
                     </div>
-                    <h3 class="font-bold text-secondary text-lg">Social Studies</h3>
+                    <h3 class="font-bold text-secondary">Social Studies</h3>
                     <p class="text-xs text-gray-500 mt-1">History, Geography, Civics</p>
                 </div>
             </div>
@@ -175,98 +191,91 @@
     </section>
 
     <!-- Pricing Section -->
-    <section class="py-16">
+    <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">
-                    Affordable Plans for <span class="text-primary">Everyone</span>
-                </h2>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <!-- Free Plan -->
-                    <div class="glass-card p-6 text-center" data-aos="fade-up" data-aos-delay="100">
-                        <i class="fas fa-gift text-4xl text-primary mb-3"></i>
-                        <h3 class="text-xl font-bold text-secondary">Free Trial</h3>
-                        <div class="text-3xl font-bold text-primary my-3">FREE</div>
-                        <ul class="text-sm text-gray-600 space-y-2 mb-6">
-                            <li><i class="fas fa-check text-primary mr-2"></i> 2 Topics per Class</li>
-                            <li><i class="fas fa-check text-primary mr-2"></i> Sample Notes</li>
-                            <li><i class="fas fa-check text-primary mr-2"></i> 5 Practice Questions</li>
-                            <li class="text-gray-400"><i class="fas fa-times mr-2"></i> Full Access</li>
-                        </ul>
-                        <a href="select-class.html?free=true" class="btn-secondary inline-block">Try for Free</a>
-                    </div>
-                    
-                    <!-- Daily Plan -->
-                    <div class="glass-card p-6 text-center border-2 border-primary transform scale-105" data-aos="fade-up" data-aos-delay="200">
-                        <div class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-3">POPULAR</div>
-                        <i class="fas fa-clock text-4xl text-primary mb-3"></i>
-                        <h3 class="text-xl font-bold text-secondary">Daily Access</h3>
-                        <div class="text-3xl font-bold text-primary my-3">20 KES</div>
-                        <ul class="text-sm text-gray-600 space-y-2 mb-6">
-                            <li><i class="fas fa-check text-primary mr-2"></i> 8 Hours Access</li>
-                            <li><i class="fas fa-check text-primary mr-2"></i> All Subjects</li>
-                            <li><i class="fas fa-check text-primary mr-2"></i> Unlimited Notes</li>
-                            <li><i class="fas fa-check text-primary mr-2"></i> All Practice Questions</li>
-                        </ul>
-                        <a href="select-class.html" class="btn-primary inline-block">Get Started</a>
-                    </div>
-                    
-                    <!-- Coming Soon -->
-                    <div class="glass-card p-6 text-center opacity-75" data-aos="fade-up" data-aos-delay="300">
-                        <i class="fas fa-calendar-week text-4xl text-primary mb-3"></i>
-                        <h3 class="text-xl font-bold text-secondary">Weekly Pass</h3>
-                        <div class="text-3xl font-bold text-primary my-3">100 KES</div>
-                        <ul class="text-sm text-gray-600 space-y-2 mb-6">
-                            <li><i class="fas fa-check text-primary mr-2"></i> 7 Days Access</li>
-                            <li><i class="fas fa-check text-primary mr-2"></i> All Features</li>
-                            <li><i class="fas fa-check text-primary mr-2"></i> Progress Tracking</li>
-                            <li><i class="fas fa-star text-primary mr-2"></i> Best Value</li>
-                        </ul>
-                        <button class="btn-secondary inline-block opacity-50 cursor-not-allowed">Coming Soon</button>
-                    </div>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-secondary mb-12" data-aos="fade-up">
+                Affordable Plans for <span class="text-primary">Everyone</span>
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-gift text-4xl text-primary mb-3"></i>
+                    <h3 class="text-xl font-bold text-secondary">Free Trial</h3>
+                    <div class="text-3xl font-bold text-primary my-3">FREE</div>
+                    <ul class="text-sm text-gray-600 space-y-2 mb-6">
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> 2 Topics per Class</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Sample Notes</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Practice Questions</li>
+                        <li class="text-gray-400"><i class="fas fa-times-circle mr-2"></i> Full Access</li>
+                    </ul>
+                    <a href="select-class.html?free=true" class="btn-secondary inline-block">Try for Free</a>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-xl p-6 text-center border-2 border-primary transform scale-105 relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full inline-block absolute -top-3 left-1/2 transform -translate-x-1/2">POPULAR</div>
+                    <i class="fas fa-clock text-4xl text-primary mb-3 mt-4"></i>
+                    <h3 class="text-xl font-bold text-secondary">Daily Access</h3>
+                    <div class="text-3xl font-bold text-primary my-3">20 KES</div>
+                    <ul class="text-sm text-gray-600 space-y-2 mb-6">
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> 8 Hours Access</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> All Subjects</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Unlimited Notes</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> All Practice Questions</li>
+                    </ul>
+                    <a href="select-class.html" class="btn-primary inline-block">Get Started</a>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-calendar-week text-4xl text-primary mb-3"></i>
+                    <h3 class="text-xl font-bold text-secondary">Weekly Pass</h3>
+                    <div class="text-3xl font-bold text-primary my-3">100 KES</div>
+                    <ul class="text-sm text-gray-600 space-y-2 mb-6">
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> 7 Days Access</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> All Features</li>
+                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Progress Tracking</li>
+                        <li><i class="fas fa-star text-primary mr-2"></i> Best Value</li>
+                    </ul>
+                    <button class="btn-secondary inline-block opacity-50 cursor-not-allowed">Coming Soon</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="py-16">
+    <!-- Reviews Section -->
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-secondary mb-12" data-aos="fade-up">
                 What <span class="text-primary">Parents & Learners</span> Say
             </h2>
-            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                <div class="glass-card p-6" data-aos="fade-right">
-                    <div class="flex items-center mb-4">
-                        <div class="text-primary text-2xl mr-2"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <div class="text-primary font-bold">5.0</div>
+            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto" id="reviewsContainer">
+                <div class="bg-gray-100 rounded-xl p-6">
+                    <div class="flex text-primary mb-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="text-gray-700 mb-4">"My daughter improved from C to B+ in just 2 weeks using NiconX. The notes are so clear and the practice questions really help."</p>
-                    <div class="font-semibold text-secondary">— Mary W., Parent, Nairobi</div>
+                    <p class="text-gray-700 mb-3">"My daughter improved from C to B+ in just 2 weeks using NiconX. The notes are so clear!"</p>
+                    <p class="font-semibold text-secondary">— Mary W., Parent, Nairobi</p>
                 </div>
-                <div class="glass-card p-6" data-aos="fade-left">
-                    <div class="flex items-center mb-4">
-                        <div class="text-primary text-2xl mr-2"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <div class="text-primary font-bold">5.0</div>
+                <div class="bg-gray-100 rounded-xl p-6">
+                    <div class="flex text-primary mb-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="text-gray-700 mb-4">"20 bob for 8 hours is a steal! My son can revise after school without stressing my wallet. Best decision ever."</p>
-                    <div class="font-semibold text-secondary">— John K., Father, Mombasa</div>
+                    <p class="text-gray-700 mb-3">"20 bob for 8 hours is a steal! My son can revise after school without stressing my wallet."</p>
+                    <p class="font-semibold text-secondary">— John K., Father, Mombasa</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16">
+    <section class="py-16 bg-gradient-to-r from-secondary to-primary">
         <div class="container mx-auto px-4 text-center">
-            <div class="glass-card p-8 md:p-12 max-w-3xl mx-auto" data-aos="zoom-in">
-                <h2 class="text-2xl md:text-3xl font-bold text-secondary mb-4">
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 max-w-3xl mx-auto" data-aos="zoom-in">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">
                     Ready to Boost Your Grades?
                 </h2>
-                <p class="text-gray-600 mb-6">
+                <p class="text-white/90 mb-6">
                     Join thousands of Kenyan students who are already learning smarter with NiconX.
                 </p>
-                <a href="select-class.html" class="btn-primary text-lg inline-block">
+                <a href="select-class.html" class="bg-white text-primary px-8 py-3 rounded-full font-bold text-lg hover:shadow-xl transition inline-block">
                     Start Learning Now <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
@@ -274,57 +283,79 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="bg-secondary text-white pt-12 pb-6">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
-                        <img src="images/logo.png" alt="Logo" class="h-10">
+                        <img src="images/logo.png" alt="Logo" class="h-10" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
                         <span class="text-white font-bold text-lg">NiconX Learning Hub</span>
                     </div>
                     <p class="text-gray-300 text-sm">Empowering Kenyan learners with affordable, quality education resources.</p>
+                    <div class="flex space-x-3 mt-4">
+                        <a href="https://wa.me/254110049657" class="text-gray-300 hover:text-primary transition"><i class="fab fa-whatsapp text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-primary transition"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-primary transition"><i class="fab fa-twitter text-xl"></i></a>
+                    </div>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-3">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="index.html" class="text-gray-300 hover:text-primary">Home</a></li>
-                        <li><a href="select-class.html" class="text-gray-300 hover:text-primary">Select Class</a></li>
-                        <li><a href="#how-it-works" class="text-gray-300 hover:text-primary">How It Works</a></li>
+                        <li><a href="index.html" class="text-gray-300 hover:text-primary transition">Home</a></li>
+                        <li><a href="select-class.html" class="text-gray-300 hover:text-primary transition">Select Class</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-primary transition">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-primary transition">Contact</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-3">Contact Us</h4>
-                    <div class="contact-info flex flex-col space-y-2">
-                        <div class="contact-item">
-                            <i class="fas fa-phone-alt"></i>
-                            <span>0110049657</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone-alt"></i>
-                            <span>0101349001</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>info@niconxlearning.co.ke</span>
-                        </div>
+                    <h4 class="text-white font-bold mb-3">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="privacy-policy.html" class="text-gray-300 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-300 hover:text-primary transition">Terms & Conditions</a></li>
+                        <li><a href="refund-policy.html" class="text-gray-300 hover:text-primary transition">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-3">Contact</h4>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <p><i class="fas fa-phone-alt text-primary mr-2 w-5"></i> 0110049657</p>
+                        <p><i class="fas fa-phone-alt text-primary mr-2 w-5"></i> 0101349001</p>
+                        <p><i class="fas fa-envelope text-primary mr-2 w-5"></i> info@niconxlearning.co.ke</p>
                     </div>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2026 NiconX Learning Hub. All rights reserved. | Designed with <i class="fas fa-heart text-primary"></i> for Kenyan students</p>
-                <p class="text-xs mt-2">NiconX Learning Hub is not affiliated with KICD. All content is for revision purposes only.</p>
+            <div class="border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
+                <p>&copy; 2026 NiconX Learning Hub. All rights reserved. | Learn. Practice. Shine.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000,
-            once: true
-        });
-    </script>
+    <script src="js/supabase-client.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        
+        // Load approved reviews
+        async function loadReviews() {
+            const reviews = JSON.parse(localStorage.getItem('niconx_reviews') || '[]');
+            const approvedReviews = reviews.filter(r => r.approved === true);
+            
+            const container = document.getElementById('reviewsContainer');
+            if (approvedReviews.length > 0) {
+                container.innerHTML = approvedReviews.map(review => `
+                    <div class="bg-gray-100 rounded-xl p-6">
+                        <div class="flex text-primary mb-2">
+                            ${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}
+                        </div>
+                        <p class="text-gray-700 mb-3">"${escapeHtml(review.comment)}"</p>
+                        <p class="font-semibold text-secondary">— ${escapeHtml(review.name)}</p>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        loadReviews();
+    </script>
 </body>
 </html>
