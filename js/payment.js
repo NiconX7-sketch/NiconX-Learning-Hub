@@ -1,6 +1,20 @@
 // NiconX Learning Hub - Payment Processing
 // Copyright 2026 NiconX Learning Hub. All rights reserved.
 
+// Phone validation function (self-contained to avoid dependency errors)
+function validatePhoneNumber(phone) {
+    const phoneRegex = /^(07|01|2547|2541)\d{8}$/;
+    return phoneRegex.test(phone);
+}
+
+function formatPhoneNumber(phone) {
+    if (!phone) return '';
+    if (phone.startsWith('254')) {
+        return '0' + phone.slice(3);
+    }
+    return phone;
+}
+
 // Get selected class from localStorage
 const selectedClass = localStorage.getItem('selectedClass');
 
@@ -14,7 +28,7 @@ document.getElementById('paymentForm').addEventListener('submit', async (e) => {
     const payBtn = document.getElementById('payBtn');
     const statusDiv = document.getElementById('paymentStatus');
     
-    // Validate phone number (Kenyan format)
+    // Validate phone
     if (!validatePhoneNumber(phone)) {
         showPaymentStatus('Please enter a valid Safaricom phone number (e.g., 0712345678)', 'error');
         return;
@@ -28,7 +42,7 @@ document.getElementById('paymentForm').addEventListener('submit', async (e) => {
     payBtn.innerHTML = '<i class="fas fa-spinner fa-pulse mr-2"></i> Sending STK Push...';
     
     try {
-        // Call IntaSend API to initiate STK Push
+        // Call IntaSend API
         const response = await fetch('/api/intasend-stk.php', {
             method: 'POST',
             headers: { 
@@ -46,56 +60,64 @@ document.getElementById('paymentForm').addEventListener('submit', async (e) => {
         const result = await response.json();
         
         if (result.success) {
-            showPaymentStatus('✓ STK Push sent to ' + formatPhoneNumber(phone) + '. Enter your M-Pesa PIN to complete payment.', 'success');
+            showPaymentStatus('✓ STK Push sent to ' + formatPhoneNumber(phone) + '. Enter your M-Pesa PIN.', 'success');
             
             // Poll for payment confirmation
             let attempts = 0;
-            const maxAttempts = 30; // 60 seconds total (2 second intervals)
+            const maxAttempts = 30;
             
             const checkInterval = setInterval(async () => {
                 attempts++;
                 
-                // Check if payment session was created in Supabase
-                const { data, error } = await supabaseClient
-                    .from('payment_sessions')
-                    .select('*')
-                    .eq('phone', phone)
-                    .eq('class_level', selectedClass)
-                    .order('paid_at', { ascending: false })
-                    .limit(1);
-                
-                if (data && data.length > 0 && data[0].status === 'active') {
-                    clearInterval(checkInterval);
-                    localStorage.setItem('sessionExpires', data[0].expires_at);
-                    showPaymentStatus('✓ Payment successful! Redirecting to dashboard...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 2000);
+                // Check if payment session exists in Supabase
+                if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+                    const { data, error } = await supabaseClient
+                        .from('payment_sessions')
+                        .select('*')
+                        .eq('phone', phone)
+                        .eq('class_level', selectedClass)
+                        .order('paid_at', { ascending: false })
+                        .limit(1);
+                    
+                    if (data && data.length > 0 && data[0].status === 'active') {
+                        clearInterval(checkInterval);
+                        localStorage.setItem('sessionExpires', data[0].expires_at);
+                        showPaymentStatus('✓ Payment successful! Redirecting...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 2000);
+                    } else if (attempts >= maxAttempts) {
+                        clearInterval(checkInterval);
+                        showPaymentStatus('Payment pending. If you paid, access will activate shortly.', 'info');
+                        payBtn.disabled = false;
+                        payBtn.innerHTML = '<i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa';
+                    }
                 } else if (attempts >= maxAttempts) {
                     clearInterval(checkInterval);
-                    showPaymentStatus('Waiting for confirmation. If you completed payment, your access will be activated within 5 minutes. Contact support if issues persist.', 'info');
+                    showPaymentStatus('Check your phone for STK Push. Access will activate after payment.', 'info');
                     payBtn.disabled = false;
                     payBtn.innerHTML = '<i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa';
                 }
             }, 2000);
             
         } else {
-            showPaymentStatus('Error: ' + (result.message || 'Payment initiation failed. Please try again.'), 'error');
+            showPaymentStatus('Error: ' + (result.message || 'Payment failed. Try again.'), 'error');
             payBtn.disabled = false;
             payBtn.innerHTML = '<i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa';
         }
         
     } catch (error) {
         console.error('Payment error:', error);
-        showPaymentStatus('Network error. Please check your internet connection and try again.', 'error');
+        showPaymentStatus('Network error. Please try again.', 'error');
         payBtn.disabled = false;
         payBtn.innerHTML = '<i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa';
     }
 });
 
-// Helper function for payment status display
 function showPaymentStatus(message, type) {
     const statusDiv = document.getElementById('paymentStatus');
+    if (!statusDiv) return;
+    
     const bgColor = type === 'success' ? 'bg-green-100 text-green-700 border border-green-200' : 
                    (type === 'error' ? 'bg-red-100 text-red-700 border border-red-200' : 
                    'bg-blue-100 text-blue-700 border border-blue-200');
@@ -103,31 +125,42 @@ function showPaymentStatus(message, type) {
     statusDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-2"></i> ${message}`;
     statusDiv.classList.remove('hidden');
     
-    // Auto-hide after 8 seconds for non-error messages
     if (type !== 'error') {
         setTimeout(() => {
-            statusDiv.classList.add('hidden');
+            if (statusDiv) statusDiv.classList.add('hidden');
         }, 8000);
     }
 }
 
-// Check if user already has an active session
+// Check if user already has active session
 async function checkExistingSession() {
     const phone = localStorage.getItem('userPhone');
-    if (phone && selectedClass) {
-        const access = await checkUserAccess(phone, selectedClass);
-        if (access.has_access) {
-            showPaymentStatus('You already have an active session! Redirecting to dashboard...', 'success');
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 2000);
+    if (phone && selectedClass && selectedClass !== 'null' && typeof supabaseClient !== 'undefined') {
+        try {
+            const { data, error } = await supabaseClient
+                .from('payment_sessions')
+                .select('*')
+                .eq('phone', phone)
+                .eq('class_level', selectedClass)
+                .eq('status', 'active')
+                .gt('expires_at', new Date().toISOString())
+                .limit(1);
+            
+            if (data && data.length > 0) {
+                showPaymentStatus('You have an active session! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            }
+        } catch(e) {
+            console.log('Session check skipped');
         }
     }
 }
 
-// Run check on page load
-if (selectedClass) {
+// Run on page load
+if (selectedClass && selectedClass !== 'null') {
     checkExistingSession();
-} else {
+} else if (!selectedClass || selectedClass === 'null') {
     window.location.href = 'select-class.html';
 }
