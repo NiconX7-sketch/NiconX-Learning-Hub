@@ -1,137 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Pay 20 KES - NiconX Learning Hub</title>
-    <meta name="description" content="Pay 20 KES for 8 hours access to Grade 4-6 revision notes and practice questions.">
-    
-    <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#FF6B35',
-                        secondary: '#1A3A5F',
-                    }
-                }
-            }
+<!-- Replace the payment status polling section with this more robust version -->
+<script>
+// Better payment confirmation polling
+let pollInterval;
+let pollAttempts = 0;
+const MAX_POLL_ATTEMPTS = 45; // 90 seconds max
+
+async function pollPaymentStatus(phone, classLevel, checkoutId) {
+    pollInterval = setInterval(async () => {
+        pollAttempts++;
+        
+        // Check Supabase for payment record
+        const { data, error } = await supabaseClient
+            .from('payment_sessions')
+            .select('*')
+            .eq('phone', phone)
+            .eq('class_level', classLevel)
+            .order('paid_at', { ascending: false })
+            .limit(1);
+        
+        if (data && data.length > 0 && data[0].status === 'active') {
+            // Payment confirmed!
+            clearInterval(pollInterval);
+            localStorage.setItem('sessionExpires', data[0].expires_at);
+            showPaymentStatus('✅ Payment successful! Redirecting to dashboard...', 'success');
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
+        } else if (pollAttempts >= MAX_POLL_ATTEMPTS) {
+            clearInterval(pollInterval);
+            showPaymentStatus('⏳ Payment pending. If you completed payment, your access will activate within 5 minutes. Refresh the page or contact support.', 'info');
+            document.getElementById('payBtn').disabled = false;
+            document.getElementById('payBtn').innerHTML = '<i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa';
         }
-    </script>
-</head>
-<body class="min-h-screen"
-    style="background: linear-gradient(135deg, #1A3A5F 0%, #FF6B35 100%);">
-
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20with%20payment" 
-       target="_blank" 
-       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
-        <i class="fab fa-whatsapp text-2xl"></i>
-    </a>
-
-    <div class="container mx-auto px-4 py-8 max-w-md">
-        <!-- Logo and Header -->
-        <div class="text-center mb-6">
-            <img src="images/logo.png" alt="NiconX Logo" class="h-16 mx-auto mb-3" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
-            <h1 class="text-2xl font-bold text-white">Complete Payment</h1>
-            <p class="text-white/80" id="selectedClassDisplay"></p>
-        </div>
-
-        <!-- Payment Card -->
-        <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
-            <!-- Access Details -->
-            <div class="bg-primary/10 rounded-xl p-4 mb-6 text-center">
-                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <i class="fas fa-clock text-primary text-2xl"></i>
-                </div>
-                <p class="font-bold text-secondary text-lg">8 Hours Access</p>
-                <p class="text-sm text-gray-600">Unlimited notes + all practice questions</p>
-            </div>
-
-            <!-- Price Display -->
-            <div class="text-center mb-6">
-                <span class="text-4xl font-bold text-primary">20 KES</span>
-                <span class="text-gray-500">/ session</span>
-            </div>
-
-            <!-- Payment Form -->
-            <form id="paymentForm">
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">
-                        <i class="fas fa-phone-alt text-primary mr-2"></i> M-Pesa Phone Number
-                    </label>
-                    <input type="tel" id="phone" placeholder="0712345678" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-                           required>
-                    <p class="text-xs text-gray-500 mt-1">Enter the Safaricom number registered on M-Pesa</p>
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-semibold mb-2">
-                        <i class="fas fa-envelope text-primary mr-2"></i> Email (Optional)
-                    </label>
-                    <input type="email" id="email" placeholder="your@email.com" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition">
-                    <p class="text-xs text-gray-500 mt-1">For payment receipt</p>
-                </div>
-
-                <button type="submit" id="payBtn" 
-                        class="w-full bg-primary text-white py-3 rounded-xl font-bold text-lg hover:bg-orange-700 transition shadow-lg">
-                    <i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa
-                </button>
-            </form>
-
-            <!-- Payment Status -->
-            <div id="paymentStatus" class="mt-4 hidden"></div>
-
-            <!-- Payment Steps -->
-            <div class="mt-6 p-4 bg-gray-50 rounded-xl">
-                <p class="text-sm font-semibold text-gray-700 mb-2"><i class="fas fa-info-circle text-primary mr-2"></i> How it works:</p>
-                <ul class="text-xs text-gray-600 space-y-1">
-                    <li>1. Enter your M-Pesa phone number</li>
-                    <li>2. Click "Pay 20 KES via M-Pesa"</li>
-                    <li>3. You'll receive an STK Push prompt on your phone</li>
-                    <li>4. Enter your M-Pesa PIN to complete payment</li>
-                    <li>5. Instant access granted for 8 hours</li>
-                </ul>
-            </div>
-
-            <!-- Back Link -->
-            <div class="mt-6 text-center">
-                <a href="select-class.html" class="text-primary text-sm hover:underline">
-                    <i class="fas fa-arrow-left mr-1"></i> Change Class
-                </a>
-            </div>
-
-            <!-- Security Badge -->
-            <div class="mt-4 text-center">
-                <p class="text-xs text-gray-400">
-                    <i class="fas fa-lock mr-1"></i> Secured by IntaSend
-                </p>
-            </div>
-        </div>
-
-        <!-- Money-back Guarantee -->
-        <div class="text-center mt-6">
-            <p class="text-white/70 text-sm">
-                <i class="fas fa-shield-alt mr-1"></i> 100% Secure Payment
-            </p>
-        </div>
-    </div>
-
-    <script src="js/supabase-client.js"></script>
-    <script src="js/payment.js"></script>
-</body>
-</html>
+    }, 2000);
+}
+</script>
