@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Page Not Found - NiconX Learning Hub</title>
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#1A3A5F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-secondary to-primary">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <img src="images/logo.png" alt="NiconX Logo" class="h-12 w-auto" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                    <div>
+                        <h1 class="text-xl font-bold text-secondary">NiconX Learning Hub</h1>
+                        <p class="text-xs text-primary font-semibold">Learn. Practice. Shine.</p>
+                    </div>
+                </div>
+                <a href="index.html" class="text-secondary hover:text-primary transition">
+                    <i class="fas fa-home mr-1"></i> Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 404 Content -->
+    <div class="container mx-auto px-4 py-16 md:py-24">
+        <div class="max-w-2xl mx-auto text-center">
+            <!-- Animated 404 -->
+            <div class="text-8xl md:text-9xl font-bold text-white mb-6 animate-bounce">
+                404
+            </div>
+            
+            <!-- Icon -->
+            <div class="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-8">
+                <i class="fas fa-compass text-5xl text-white"></i>
+            </div>
+            
+            <!-- Message -->
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Oops! Page Not Found</h2>
+            <p class="text-white/80 text-lg mb-8">
+                It seems like you've taken a wrong turn. The page you're looking for doesn't exist or has been moved.
+            </p>
+            
+            <!-- Search / Suggestions -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8">
+                <p class="text-white font-semibold mb-3">You might be looking for:</p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="select-class.html" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-sm transition">
+                        <i class="fas fa-graduation-cap mr-1"></i> Select Class
+                    </a>
+                    <a href="index.html" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-sm transition">
+                        <i class="fas fa-home mr-1"></i> Homepage
+                    </a>
+                    <a href="about.html" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-sm transition">
+                        <i class="fas fa-info-circle mr-1"></i> About Us
+                    </a>
+                    <a href="contact.html" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-sm transition">
+                        <i class="fas fa-envelope mr-1"></i> Contact Support
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Go Home Button -->
+            <a href="index.html" class="inline-block bg-white text-primary px-8 py-3 rounded-full font-bold text-lg hover:shadow-xl transition">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Home
+            </a>
+            
+            <!-- Support Message -->
+            <p class="text-white/60 text-sm mt-8">
+                <i class="fas fa-headset mr-1"></i> Need help? Contact us on WhatsApp: <strong class="text-white">0110049657</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Simple Footer -->
+    <footer class="absolute bottom-0 left-0 right-0 bg-secondary/80 backdrop-blur-md text-white py-4">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-gray-300">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Redirect after 10 seconds automatically
+        setTimeout(function() {
+            window.location.href = 'index.html';
+        }, 10000);
+    </script>
+</body>
+</html>
