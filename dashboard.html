@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>My Dashboard - NiconX Learning Hub</title>
+    <meta name="description" content="Access your revision notes and practice questions for Grade 4-6 Kenyan curriculum.">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#1A3A5F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20with%20my%20studies" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center flex-wrap gap-3">
+                <div class="flex items-center space-x-3">
+                    <img src="images/logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                    <div>
+                        <h1 class="text-lg font-bold text-secondary">NiconX Learning Hub</h1>
+                        <p class="text-xs text-gray-500" id="timerDisplay">Checking access...</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-sm font-semibold text-secondary" id="classDisplay"></p>
+                        <button onclick="logout()" class="text-red-500 text-sm hover:text-red-700">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Welcome Banner -->
+        <div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-5 mb-8 text-white">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                    <h2 class="text-xl font-bold">Welcome Back! 👋</h2>
+                    <p class="text-white/80 text-sm">Continue your revision journey. Choose a topic below to start learning.</p>
+                </div>
+                <div class="bg-white/20 rounded-full px-4 py-2">
+                    <i class="fas fa-graduation-cap mr-2"></i>
+                    <span class="text-sm font-semibold" id="sessionStatus">Active Session</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Free Trial Notice -->
+        <div id="freeTrialNote" class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-6 hidden">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div class="flex items-center">
+                    <i class="fas fa-gift text-blue-500 text-xl mr-3"></i>
+                    <div>
+                        <p class="font-semibold text-blue-800">You're on Free Trial Mode</p>
+                        <p class="text-sm text-blue-600">Accessing 2 free topics. <a href="payment.html" class="underline font-semibold">Pay 20 KES</a> to unlock all premium content for 8 hours.</p>
+                    </div>
+                </div>
+                <a href="payment.html" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-orange-700">
+                    Upgrade Now
+                </a>
+            </div>
+        </div>
+
+        <!-- Subjects Grid -->
+        <div id="subjectsContainer" class="grid md:grid-cols-2 gap-6">
+            <div class="col-span-2 text-center py-12">
+                <div class="spinner mx-auto"></d<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>My Dashboard - NiconX Learning Hub</title>
+    <meta name="description" content="Access your revision notes and practice questions for Grade 4-6 Kenyan curriculum.">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#1A3A5F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20with%20my%20studies" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center flex-wrap gap-3">
+                <div class="flex items-center space-x-3">
+                    <img src="images/logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                    <div>
+                        <h1 class="text-lg font-bold text-secondary">NiconX Learning Hub</h1>
+                        <p class="text-xs text-gray-500" id="timerDisplay">Checking access...</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-sm font-semibold text-secondary" id="classDisplay"></p>
+                        <button onclick="logout()" class="text-red-500 text-sm hover:text-red-700">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Welcome Banner -->
+        <div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-5 mb-8 text-white">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                    <h2 class="text-xl font-bold">Welcome Back! 👋</h2>
+                    <p class="text-white/80 text-sm">Continue your revision journey. Choose a topic below to start learning.</p>
+                </div>
+                <div class="bg-white/20 rounded-full px-4 py-2">
+                    <i class="fas fa-graduation-cap mr-2"></i>
+                    <span class="text-sm font-semibold" id="sessionStatus">Active Session</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Free Trial Notice -->
+        <div id="freeTrialNote" class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-6 hidden">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div class="flex items-center">
+                    <i class="fas fa-gift text-blue-500 text-xl mr-3"></i>
+                    <div>
+                        <p class="font-semibold text-blue-800">You're on Free Trial Mode</p>
+                        <p class="text-sm text-blue-600">Accessing 2 free topics. <a href="payment.html" class="underline font-semibold">Pay 20 KES</a> to unlock all premium content for 8 hours.</p>
+                    </div>
+                </div>
+                <a href="payment.html" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-orange-700">
+                    Upgrade Now
+                </a>
+            </div>
+        </div>
+
+        <!-- Subjects Grid -->
+        <div id="subjectsContainer" class="grid md:grid-cols-2 gap-6">
+            <div class="col-span-2 text-center py-12">
+                <div class="spinner mx-auto"></div>
+                <p class="text-gray-500 mt-4">Loading your topics...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-12 py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-gray-500">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/supabase-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/content.js"></script>
+</body>
+</html>iv>
+                <p class="text-gray-500 mt-4">Loading your topics...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-12 py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-gray-500">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/supabase-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/content.js"></script>
+</body>
+</html>
