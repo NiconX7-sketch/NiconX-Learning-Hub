@@ -2,10 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Select Your Class - NiconX Learning Hub</title>
+    <meta name="description" content="Choose your class to start learning. Grade 4, 5, and 6 available with Kenyan CBC curriculum.">
+    
+    <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 (Professional Icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -19,84 +31,228 @@
         }
     </script>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <!-- Header with Logo -->
-        <div class="text-center mb-8">
-            <img src="images/logo.png" alt="NiconX Logo" class="h-16 mx-auto mb-2">
-            <h1 class="text-2xl font-bold text-secondary">Choose Your Class</h1>
-            <p class="text-gray-600">Select the grade you want to study</p>
-        </div>
+<body class="min-h-screen"
+    style="background: linear-gradient(rgba(26, 58, 95, 0.88), rgba(26, 58, 95, 0.92)), url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2032&auto=format') center/cover fixed;">
 
-        <!-- Class Cards -->
-        <div class="grid md:grid-cols-3 gap-6">
-            <!-- Grade 4 -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                <div class="bg-primary p-4 text-white text-center">
-                    <h2 class="text-2xl font-bold">Grade 4</h2>
-                </div>
-                <div class="p-6">
-                    <ul class="space-y-2 mb-6">
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Mathematics</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> English</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Science</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Social Studies</li>
-                    </ul>
-                    <button onclick="selectClass('grade4')" class="w-full bg-secondary text-white py-2 rounded-lg font-semibold hover:bg-secondary/90">
-                        Select Grade 4
-                    </button>
-                </div>
-            </div>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20choosing%20a%20class" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50"
+       style="box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
 
-            <!-- Grade 5 -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                <div class="bg-primary p-4 text-white text-center">
-                    <h2 class="text-2xl font-bold">Grade 5</h2>
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center flex-wrap gap-3">
+                <div class="flex items-center space-x-3">
+                    <img src="images/logo.png" alt="NiconX Learning Hub Logo" class="h-12 w-auto md:h-14" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold text-secondary">NiconX Learning Hub</h1>
+                        <p class="text-xs md:text-sm text-primary font-semibold">Learn. Practice. Shine.</p>
+                    </div>
                 </div>
-                <div class="p-6">
-                    <ul class="space-y-2 mb-6">
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Mathematics</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> English</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Science</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Social Studies</li>
-                    </ul>
-                    <button onclick="selectClass('grade5')" class="w-full bg-secondary text-white py-2 rounded-lg font-semibold hover:bg-secondary/90">
-                        Select Grade 5
-                    </button>
-                </div>
-            </div>
-
-            <!-- Grade 6 -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                <div class="bg-primary p-4 text-white text-center">
-                    <h2 class="text-2xl font-bold">Grade 6</h2>
-                </div>
-                <div class="p-6">
-                    <ul class="space-y-2 mb-6">
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Mathematics</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> English</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Science</li>
-                        <li><i class="fas fa-check-circle text-primary mr-2"></i> Social Studies</li>
-                    </ul>
-                    <button onclick="selectClass('grade6')" class="w-full bg-secondary text-white py-2 rounded-lg font-semibold hover:bg-secondary/90">
-                        Select Grade 6
-                    </button>
-                </div>
+                <nav class="flex items-center space-x-4 text-sm">
+                    <a href="index.html" class="text-secondary hover:text-primary">Home</a>
+                    <a href="select-class.html" class="text-primary font-semibold">Classes</a>
+                    <a href="about.html" class="text-secondary hover:text-primary">About</a>
+                    <a href="contact.html" class="btn-primary text-sm py-2 px-4">Contact</a>
+                </nav>
             </div>
         </div>
+    </header>
 
-        <!-- Free Trial Notice -->
-        <div class="mt-8 text-center">
-            <p class="text-gray-500"><i class="fas fa-info-circle"></i> First 2 topics are FREE to try!</p>
-            <a href="index.html" class="text-primary mt-4 inline-block">&larr; Back to Home</a>
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Header Section -->
+        <div class="text-center mb-12" data-aos="fade-up">
+            <div class="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 mb-4">
+                <span class="text-white font-semibold text-sm"><i class="fas fa-graduation-cap mr-2"></i> Choose Your Learning Path</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Select Your Class</h1>
+            <p class="text-white/80 text-lg max-w-2xl mx-auto">Pick the grade you're currently studying and start revising instantly. First 2 topics are FREE!</p>
+        </div>
+
+        <!-- Class Cards Grid -->
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <!-- Grade 4 Card -->
+            <div class="group" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-r from-primary to-orange-600 p-6 text-white text-center">
+                        <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-layer-group text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold">Grade 4</h2>
+                        <p class="text-white/80 text-sm mt-1">Upper Primary</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Mathematics</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>English</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Science</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Social Studies</span>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4 mb-4">
+                            <div class="flex justify-between text-sm text-gray-500">
+                                <span><i class="fas fa-file-alt mr-1"></i> 20+ Topics</span>
+                                <span><i class="fas fa-question-circle mr-1"></i> 100+ Questions</span>
+                            </div>
+                        </div>
+                        <button onclick="selectClass('grade4')" 
+                                class="w-full bg-secondary text-white py-3 rounded-xl font-semibold hover:bg-secondary/90 transition group-hover:shadow-lg">
+                            <i class="fas fa-arrow-right mr-2"></i> Select Grade 4
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grade 5 Card (Highlighted/Popular) -->
+            <div class="group" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-primary relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs font-bold px-4 py-1 rounded-full">
+                        <i class="fas fa-fire mr-1"></i> MOST POPULAR
+                    </div>
+                    <div class="bg-gradient-to-r from-secondary to-primary/80 p-6 text-white text-center">
+                        <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-chart-line text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold">Grade 5</h2>
+                        <p class="text-white/80 text-sm mt-1">Upper Primary</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Mathematics</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>English</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Science</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Social Studies</span>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4 mb-4">
+                            <div class="flex justify-between text-sm text-gray-500">
+                                <span><i class="fas fa-file-alt mr-1"></i> 25+ Topics</span>
+                                <span><i class="fas fa-question-circle mr-1"></i> 120+ Questions</span>
+                            </div>
+                        </div>
+                        <button onclick="selectClass('grade5')" 
+                                class="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-orange-700 transition group-hover:shadow-lg">
+                            <i class="fas fa-arrow-right mr-2"></i> Select Grade 5
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grade 6 Card -->
+            <div class="group" data-aos="fade-up" data-aos-delay="300">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-r from-secondary to-secondary/80 p-6 text-white text-center">
+                        <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-flag-checkered text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold">Grade 6</h2>
+                        <p class="text-white/80 text-sm mt-1">Upper Primary</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Mathematics</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>English</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Science</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-check-circle text-primary w-6"></i>
+                                <span>Social Studies</span>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4 mb-4">
+                            <div class="flex justify-between text-sm text-gray-500">
+                                <span><i class="fas fa-file-alt mr-1"></i> 25+ Topics</span>
+                                <span><i class="fas fa-question-circle mr-1"></i> 120+ Questions</span>
+                            </div>
+                        </div>
+                        <button onclick="selectClass('grade6')" 
+                                class="w-full bg-secondary text-white py-3 rounded-xl font-semibold hover:bg-secondary/90 transition group-hover:shadow-lg">
+                            <i class="fas fa-arrow-right mr-2"></i> Select Grade 6
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Free Trial Banner -->
+        <div class="mt-12" data-aos="fade-up" data-aos-delay="400">
+            <div class="bg-white/15 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-gift text-primary text-xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-white font-bold text-lg">Not sure yet? Try for FREE!</h3>
+                            <p class="text-white/70 text-sm">Get 2 complete topics from any class without paying.</p>
+                        </div>
+                    </div>
+                    <a href="select-class.html?free=true" class="bg-white text-primary px-6 py-2 rounded-full font-semibold hover:shadow-lg transition">
+                        <i class="fas fa-play mr-2"></i> Start Free Trial
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Home Link -->
+        <div class="text-center mt-8">
+            <a href="index.html" class="text-white/70 hover:text-white transition inline-flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Home
+            </a>
         </div>
     </div>
 
+    <!-- Simple Footer -->
+    <footer class="bg-secondary/90 backdrop-blur-md text-white pt-6 pb-4 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-gray-300">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/main.js"></script>
     <script>
+        AOS.init({ duration: 1000, once: true });
+        
         function selectClass(grade) {
-            // Save selected class to localStorage
             localStorage.setItem('selectedClass', grade);
-            // Check if user wants free trial (from URL param)
             const urlParams = new URLSearchParams(window.location.search);
             const isFree = urlParams.get('free') === 'true';
             
