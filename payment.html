@@ -6,32 +6,28 @@
     <title>Pay 20 KES - NiconX Learning Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#FF6B35',
-                        secondary: '#1A3A5F',
-                    }
-                }
-            }
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1A3A5F 0%, #FF6B35 100%);
+            min-height: 100vh;
         }
-    </script>
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="flex items-center justify-center p-4">
     <div class="container mx-auto px-4 py-8 max-w-md">
-        <div class="text-center mb-6">
-            <img src="images/logo.png" alt="NiconX Logo" class="h-12 mx-auto mb-2">
-            <h1 class="text-2xl font-bold text-secondary">Pay 20 KES</h1>
-            <p class="text-gray-600">Get 8 hours access to <span id="selectedClassDisplay"></span></p>
-        </div>
+        <div class="bg-white rounded-2xl shadow-2xl p-8">
+            <div class="text-center mb-6">
+                <img src="images/logo.png" alt="NiconX Logo" class="h-16 mx-auto mb-3">
+                <h1 class="text-2xl font-bold text-secondary">Complete Payment</h1>
+                <p class="text-gray-500">Pay 20 KES for 8 hours access</p>
+            </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6">
-            <div class="bg-primary/10 p-4 rounded-lg mb-6 text-center">
+            <div class="bg-primary/10 rounded-xl p-4 mb-6 text-center">
                 <i class="fas fa-clock text-primary text-3xl mb-2"></i>
-                <p class="font-semibold">⏰ 8 Hours Access</p>
-                <p class="text-sm text-gray-600">Unlimited reading & practice questions</p>
+                <p class="font-semibold text-secondary">⏰ 8 Hours Access</p>
+                <p class="text-sm text-gray-600">Unlimited notes + practice questions</p>
             </div>
 
             <form id="paymentForm">
@@ -44,6 +40,15 @@
                            required>
                     <p class="text-xs text-gray-500 mt-1">Enter the M-Pesa registered number</p>
                 </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">
+                        <i class="fas fa-envelope mr-2"></i> Email (Optional)
+                    </label>
+                    <input type="email" id="email" placeholder="your@email.com" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+                    <p class="text-xs text-gray-500 mt-1">For payment receipt</p>
+                </div>
 
                 <button type="submit" id="payBtn" 
                         class="w-full bg-primary text-white py-3 rounded-lg font-bold text-lg hover:bg-orange-700 transition">
@@ -53,25 +58,115 @@
 
             <div id="paymentStatus" class="mt-4 hidden"></div>
 
-            <p class="text-center text-xs text-gray-400 mt-6">
-                You'll receive an M-Pesa prompt. Enter PIN to complete.
-            </p>
-        </div>
+            <div class="mt-6 text-center">
+                <a href="select-class.html" class="text-primary text-sm">&larr; Back to Classes</a>
+            </div>
 
-        <div class="text-center mt-6">
-            <a href="select-class.html" class="text-primary">&larr; Change Class</a>
+            <div class="mt-4 p-3 bg-gray-50 rounded-lg text-center">
+                <p class="text-xs text-gray-500">
+                    <i class="fas fa-lock mr-1"></i> Secured by IntaSend
+                </p>
+            </div>
         </div>
     </div>
 
-    <script src="js/payment.js"></script>
     <script>
-        // Display selected class
+        // Get selected class from localStorage
         const selectedClass = localStorage.getItem('selectedClass');
-        const classDisplay = document.getElementById('selectedClassDisplay');
-        if (selectedClass) {
-            classDisplay.textContent = selectedClass.toUpperCase().replace('grade', 'Grade ');
-        } else {
+        if (!selectedClass) {
             window.location.href = 'select-class.html';
+        }
+        
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const payBtn = document.getElementById('payBtn');
+            const statusDiv = document.getElementById('paymentStatus');
+            
+            // Validate phone
+            if (!phone.match(/^(07|01|2547)\d{8}$/)) {
+                showStatus('Please enter a valid Safaricom phone number', 'error');
+                return;
+            }
+            
+            // Store phone for later
+            localStorage.setItem('userPhone', phone);
+            
+            // Disable button
+            payBtn.disabled = true;
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending STK Push...';
+            
+            try {
+                // Call IntaSend API to initiate STK Push
+                const response = await fetch('/api/intasend-stk.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        phone: phone,
+                        email: email,
+                        amount: 20,
+                        class_level: selectedClass
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus('✓ STK Push sent to ' + phone + '. Enter PIN on your phone.', 'success');
+                    
+                    // Poll for payment confirmation (check webhook effect)
+                    let attempts = 0;
+                    const maxAttempts = 30; // 30 seconds
+                    
+                    const checkInterval = setInterval(async () => {
+                        attempts++;
+                        
+                        // Check if payment session was created in Supabase
+                        const { data, error } = await supabaseClient
+                            .from('payment_sessions')
+                            .select('*')
+                            .eq('phone', phone)
+                            .eq('class_level', selectedClass)
+                            .order('created_at', { ascending: false })
+                            .limit(1);
+                        
+                        if (data && data.length > 0 && data[0].status === 'active') {
+                            clearInterval(checkInterval);
+                            localStorage.setItem('sessionExpires', data[0].expires_at);
+                            showStatus('✓ Payment successful! Redirecting...', 'success');
+                            setTimeout(() => {
+                                window.location.href = 'dashboard.html';
+                            }, 2000);
+                        } else if (attempts >= maxAttempts) {
+                            clearInterval(checkInterval);
+                            showStatus('Waiting for confirmation. If you paid, your access will be activated shortly.', 'info');
+                            payBtn.disabled = false;
+                            payBtn.innerHTML = '<i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa';
+                        }
+                    }, 2000);
+                    
+                } else {
+                    showStatus('Error: ' + result.message, 'error');
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = '<i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa';
+                }
+                
+            } catch (error) {
+                showStatus('Network error. Please try again.', 'error');
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa';
+            }
+        });
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('paymentStatus');
+            const bgColor = type === 'success' ? 'bg-green-100 text-green-700' : 
+                           (type === 'error' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700');
+            statusDiv.className = `mt-4 p-3 rounded-lg ${bgColor}`;
+            statusDiv.innerHTML = message;
+            statusDiv.classList.remove('hidden');
         }
     </script>
 </body>
