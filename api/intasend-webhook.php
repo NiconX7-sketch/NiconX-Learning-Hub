@@ -5,16 +5,15 @@ header('Content-Type: application/json');
 $rawInput = file_get_contents('php://input');
 $webhookData = json_decode($rawInput, true);
 
-// Write to log file for debugging
+// Write to log file
 file_put_contents('webhook-log.txt', date('Y-m-d H:i:s') . ': ' . $rawInput . PHP_EOL, FILE_APPEND);
 
-// Verify webhook authenticity (optional but recommended)
-$signature = $_SERVER['HTTP_X_INTASEND_SIGNATURE'] ?? '';
-// TODO: Verify signature using your secret key
+// Supabase configuration
+$supabaseUrl = getenv('SUPABASE_URL');
+$supabaseKey = getenv('SUPABASE_ANON_KEY');
 
 // Check if payment was successful
 $state = $webhookData['invoice']['state'] ?? $webhookData['state'] ?? '';
-$invoiceId = $webhookData['invoice']['id'] ?? $webhookData['id'] ?? '';
 $mpesaReceipt = $webhookData['invoice']['mpesa_receipt'] ?? $webhookData['mpesa_receipt'] ?? '';
 $phoneNumber = $webhookData['invoice']['phone_number'] ?? $webhookData['phone_number'] ?? '';
 $amount = $webhookData['invoice']['amount'] ?? $webhookData['amount'] ?? 20;
@@ -26,12 +25,7 @@ $classLevel = $matches[1] ?? 'grade4';
 
 if ($state === 'COMPLETE' || $state === 'PAID') {
     // Payment successful - create session in Supabase
-    require_once('supabase-config.php'); // You'll create this
-    
     $expiresAt = date('Y-m-d H:i:s', strtotime('+8 hours'));
-    
-    $supabaseUrl = getenv('SUPABASE_URL');
-    $supabaseKey = getenv('SUPABASE_ANON_KEY');
     
     // Insert payment session
     $insertData = [
@@ -47,7 +41,8 @@ if ($state === 'COMPLETE' || $state === 'PAID') {
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'apikey: ' . $supabaseKey,
         'Authorization: Bearer ' . $supabaseKey,
-        'Content-Type: application/json'
+        'Content-Type: application/json',
+        'Prefer: return=minimal'
     ]);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($insertData));
