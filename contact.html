@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Contact Us - NiconX Learning Hub</title>
+    <meta name="description" content="Contact NiconX Learning Hub - Get support, ask questions, or provide feedback about our revision platform.">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#1A3A5F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20have%20a%20question" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center flex-wrap gap-3">
+                <div class="flex items-center space-x-3">
+                    <img src="images/logo.png" alt="NiconX Logo" class="h-12 w-auto md:h-14" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold text-secondary">NiconX Learning Hub</h1>
+                        <p class="text-xs md:text-sm text-primary font-semibold">Learn. Practice. Shine.</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4 text-sm">
+                    <a href="index.html" class="text-secondary hover:text-primary">Home</a>
+                    <a href="select-class.html" class="text-secondary hover:text-primary">Classes</a>
+                    <a href="about.html" class="text-secondary hover:text-primary">About</a>
+                    <a href="contact.html" class="text-primary font-semibold">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-16 bg-gradient-to-r from-secondary to-primary">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">Contact Us</h1>
+            <p class="text-white/80 text-lg max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">We're here to help! Reach out with any questions, feedback, or support needs.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <div class="container mx-auto px-4 py-12 max-w-5xl">
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Contact Info -->
+            <div data-aos="fade-right">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-secondary mb-6">Get in Touch</h2>
+                    
+                    <div class="space-y-5">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-phone-alt text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-secondary">Phone / SMS</h3>
+                                <p class="text-gray-600">0110049657</p>
+                                <p class="text-gray-600">0101349001</p>
+                                <p class="text-sm text-gray-400 mt-1">Mon-Sat, 8am - 6pm</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fab fa-whatsapp text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-secondary">WhatsApp</h3>
+                                <p class="text-gray-600">0110049657</p>
+                                <p class="text-sm text-gray-400 mt-1">Quick responses within 2 hours</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-envelope text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-secondary">Email</h3>
+                                <p class="text-gray-600">info@niconxlearning.co.ke</p>
+                                <p class="text-gray-600">support@niconxlearning.co.ke</p>
+                                <p class="text-sm text-gray-400 mt-1">Allow 24-48 hours for response</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-globe text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-secondary">Website</h3>
+                                <p class="text-gray-600">nicon-x-learning-hub.vercel.app</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="mt-8 pt-6 border-t">
+                        <h3 class="font-semibold text-secondary mb-3">Follow Us</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary/10 transition">
+                                <i class="fab fa-facebook text-gray-600 hover:text-primary"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary/10 transition">
+                                <i class="fab fa-twitter text-gray-600 hover:text-primary"></i>
+                            </a>
+                            <a href="https://wa.me/254110049657" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary/10 transition">
+                                <i class="fab fa-whatsapp text-gray-600 hover:text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div data-aos="fade-left">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-secondary mb-6">Send Us a Message</h2>
+                    
+                    <form id="contactForm">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-semibold mb-2">Your Name *</label>
+                            <input type="text" id="contactName" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-semibold mb-2">Phone Number *</label>
+                            <input type="tel" id="contactPhone" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-semibold mb-2">Email Address</label>
+                            <input type="email" id="contactEmail" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-semibold mb-2">Subject *</label>
+                            <select id="contactSubject" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition">
+                                <option value="">Select a subject</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Payment Issue">Payment Issue</option>
+                                <option value="Access Problem">Access Problem</option>
+                                <option value="Content Suggestion">Content Suggestion</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Report Issue">Report Issue</option>
+                                <option value="Partnership">Partnership</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 font-semibold mb-2">Message *</label>
+                            <textarea id="contactMessage" rows="5" required 
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                                      placeholder="Please provide as much detail as possible..."></textarea>
+                        </div>
+                        
+                        <button type="submit" id="submitBtn" 
+                                class="w-full bg-primary text-white py-3 rounded-xl font-bold text-lg hover:bg-orange-700 transition">
+                            <i class="fas fa-paper-plane mr-2"></i> Send Message
+                        </button>
+                    </form>
+                    
+                    <div id="formStatus" class="mt-4 hidden"></div>
+                    
+                    <p class="text-xs text-gray-400 text-center mt-4">
+                        <i class="fas fa-lock mr-1"></i> Your information is secure. We'll respond within 24-48 hours.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="mt-12" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-secondary text-center mb-8">Frequently Asked Questions</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="font-bold text-secondary mb-2">How do I access content after payment?</h3>
+                    <p class="text-gray-600 text-sm">After successful M-Pesa payment, you'll be automatically redirected to your dashboard where all topics for your selected class are unlocked.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="font-bold text-secondary mb-2">What if I don't receive the STK Push?</h3>
+                    <p class="text-gray-600 text-sm">Check if your phone number is correctly registered for M-Pesa. If the issue persists, contact us on WhatsApp with your phone number.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="font-bold text-secondary mb-2">Can I get a refund?</h3>
+                    <p class="text-gray-600 text-sm">Due to the digital nature of our content, we do not offer refunds once access has been granted. Contact us if you experience technical issues.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="font-bold text-secondary mb-2">Do you offer content for higher grades?</h3>
+                    <p class="text-gray-600 text-sm">Currently we offer Grades 4-6. Grades 7-8 and Form 1-4 are in development and will be added soon!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white pt-12 pb-6 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <img src="images/logo.png" alt="Logo" class="h-10" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                        <span class="text-white font-bold text-lg">NiconX Learning Hub</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">Empowering Kenyan learners with affordable, quality education resources.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-3">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-gray-300 hover:text-primary transition">Home</a></li>
+                        <li><a href="select-class.html" class="text-gray-300 hover:text-primary transition">Select Class</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-primary transition">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-3">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="privacy-policy.html" class="text-gray-300 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-300 hover:text-primary transition">Terms & Conditions</a></li>
+                        <li><a href="refund-policy.html" class="text-gray-300 hover:text-primary transition">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-3">Contact</h4>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <p><i class="fas fa-phone-alt text-primary mr-2 w-5"></i> 0110049657</p>
+                        <p><i class="fas fa-phone-alt text-primary mr-2 w-5"></i> 0101349001</p>
+                        <p><i class="fas fa-envelope text-primary mr-2 w-5"></i> info@niconxlearning.co.ke</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
+                <p>&copy; 2026 NiconX Learning Hub. All rights reserved. | Learn. Practice. Shine.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        
+        // Contact form handler
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const statusDiv = document.getElementById('formStatus');
+            const originalText = submitBtn.innerHTML;
+            
+            // Get form data
+            const name = document.getElementById('contactName').value;
+            const phone = document.getElementById('contactPhone').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Validate phone
+            if (!phone.match(/^(07|01|2547|2541)\d{8}$/)) {
+                statusDiv.className = 'mt-4 p-3 bg-red-100 text-red-700 rounded-xl';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Please enter a valid phone number';
+                statusDiv.classList.remove('hidden');
+                return;
+            }
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse mr-2"></i> Sending...';
+            
+            // Store message in localStorage (to be reviewed in admin panel)
+            const messages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+            messages.push({
+                id: Date.now(),
+                name: name,
+                phone: phone,
+                email: email,
+                subject: subject,
+                message: message,
+                date: new Date().toISOString(),
+                status: 'unread'
+            });
+            localStorage.setItem('contact_messages', JSON.stringify(messages));
+            
+            // Simulate sending (in production, this would send email/SMS)
+            setTimeout(() => {
+                statusDiv.className = 'mt-4 p-3 bg-green-100 text-green-700 rounded-xl';
+                statusDiv.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Message sent successfully! We\'ll get back to you within 24-48 hours.';
+                statusDiv.classList.remove('hidden');
+                
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                
+                // Hide status after 5 seconds
+                setTimeout(() => {
+                    statusDiv.classList.add('hidden');
+                }, 5000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
