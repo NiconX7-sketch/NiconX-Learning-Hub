@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>About Us - NiconX Learning Hub</title>
+    <meta name="description" content="Learn about NiconX Learning Hub - Kenya's affordable revision platform for Grade 4-6 students following CBC curriculum.">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#1A3A5F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20have%20a%20question%20about%20your%20platform" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center flex-wrap gap-3">
+                <div class="flex items-center space-x-3">
+                    <img src="images/logo.png" alt="NiconX Logo" class="h-12 w-auto md:h-14" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold text-secondary">NiconX Learning Hub</h1>
+                        <p class="text-xs md:text-sm text-primary font-semibold">Learn. Practice. Shine.</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4 text-sm">
+                    <a href="index.html" class="text-secondary hover:text-primary">Home</a>
+                    <a href="select-class.html" class="text-secondary hover:text-primary">Classes</a>
+                    <a href="about.html" class="text-primary font-semibold">About</a>
+                    <a href="contact.html" class="btn-primary text-sm py-2 px-4">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-16 bg-gradient-to-r from-secondary to-primary">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">About NiconX Learning Hub</h1>
+            <p class="text-white/80 text-lg max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">Empowering Kenyan students with affordable, quality revision materials</p>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <div class="container mx-auto px-4 py-12 max-w-5xl">
+        <div class="grid md:grid-cols-2 gap-8 mb-12" data-aos="fade-up">
+            <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+                <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-bullseye text-primary text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-secondary mb-3">Our Mission</h2>
+                <p class="text-gray-600">To democratize quality education by providing affordable, curriculum-aligned digital revision materials to every Kenyan learner regardless of their economic background.</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+                <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-eye text-primary text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-secondary mb-3">Our Vision</h2>
+                <p class="text-gray-600">To become Kenya's most trusted digital learning platform, empowering over 1 million students annually with accessible, high-quality revision materials.</p>
+            </div>
+        </div>
+
+        <!-- Story -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-secondary mb-4 text-center">Our Story</h2>
+            <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+            <p class="text-gray-600 mb-4">NiconX Learning Hub was born from a simple observation: many Kenyan students lack access to quality revision materials because textbooks are expensive and internet data costs are high. We created a solution that combines affordable pricing (20 KES), M-Pesa convenience, and mobile-friendly design.</p>
+            <p class="text-gray-600">The name "NiconX" combines "Nicodemus" (founder) and "X" representing excellence and the unknown potential in every learner. The "X" also honors Kate who gave the original idea.</p>
+        </div>
+
+        <!-- What We Offer -->
+        <div class="mb-12" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-secondary text-center mb-8">What We Offer</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-file-alt text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-secondary mb-2">Summarised Notes</h3>
+                    <p class="text-sm text-gray-600">Easy-to-understand notes covering all topics in the CBC curriculum</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-question-circle text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-secondary mb-2">Topical Questions</h3>
+                    <p class="text-sm text-gray-600">Practice questions with answers for every topic</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-chart-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-secondary mb-2">Progress Tracking</h3>
+                    <p class="text-sm text-gray-600">Track your performance and identify areas for improvement</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Choose Us -->
+        <div class="mb-12" data-aos="fade-up">
+            <h2 class="text-2xl font-bold text-secondary text-center mb-8">Why Choose NiconX</h2>
+            <div class="grid md:grid-cols-4 gap-4">
+                <div class="bg-gray-100 rounded-xl p-4 text-center">
+                    <i class="fas fa-money-bill-wave text-primary text-2xl mb-2"></i>
+                    <p class="font-semibold text-secondary">20 KES Only</p>
+                    <p class="text-xs text-gray-500">8 hours access</p>
+                </div>
+                <div class="bg-gray-100 rounded-xl p-4 text-center">
+                    <i class="fas fa-mobile-alt text-primary text-2xl mb-2"></i>
+                    <p class="font-semibold text-secondary">Mobile Friendly</p>
+                    <p class="text-xs text-gray-500">Works on any phone</p>
+                </div>
+                <div class="bg-gray-100 rounded-xl p-4 text-center">
+                    <i class="fas fa-book text-primary text-2xl mb-2"></i>
+                    <p class="font-semibold text-secondary">CBC Aligned</p>
+                    <p class="text-xs text-gray-500">Kenyan curriculum</p>
+                </div>
+                <div class="bg-gray-100 rounded-xl p-4 text-center">
+                    <i class="fas fa-clock text-primary text-2xl mb-2"></i>
+                    <p class="font-semibold text-secondary">24/7 Access</p>
+                    <p class="text-xs text-gray-500">Study anytime</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Founder Quote -->
+        <div class="bg-primary/10 rounded-2xl p-8 text-center" data-aos="zoom-in">
+            <i class="fas fa-quote-left text-primary text-3xl mb-4 opacity-50"></i>
+            <p class="text-lg text-secondary font-medium mb-4">"Every child deserves quality education. At NiconX, we're making that possible one topic at a time."</p>
+            <p class="font-semibold text-secondary">— Nicodemus & Kate, Founders</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <img src="images/logo.png" alt="Logo" class="h-10" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                        <span class="text-white font-bold text-lg">NiconX Learning Hub</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">Empowering Kenyan learners with affordable, quality education resources.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-3">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-gray-300 hover:text-primary transition">Home</a></li>
+                        <li><a href="select-class.html" class="text-gray-300 hover:text-primary transition">Select Class</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-primary transition">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-3">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="privacy-policy.html" class="text-gray-300 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-300 hover:text-primary transition">Terms & Conditions</a></li>
+                        <li><a href="refund-policy.html" class="text-gray-300 hover:text-primary transition">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-3">Contact</h4>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <p><i class="fas fa-phone-alt text-primary mr-2 w-5"></i> 0110049657</p>
+                        <p><i class="fas fa-phone-alt text-primary mr-2 w-5"></i> 0101349001</p>
+                        <p><i class="fas fa-envelope text-primary mr-2 w-5"></i> info@niconxlearning.co.ke</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
+                <p>&copy; 2026 NiconX Learning Hub. All rights reserved. | Learn. Practice. Shine.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>
