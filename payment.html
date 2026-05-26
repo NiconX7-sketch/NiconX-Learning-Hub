@@ -5,16 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Pay 20 KES - NiconX Learning Hub</title>
     
-    <!-- Favicon - prevents 404 -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
-    
-    <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
@@ -29,6 +22,7 @@
             }
         }
     </script>
+    <script src="js/supabase-client.js"></script>
     
     <style>
         body {
@@ -39,7 +33,6 @@
 </head>
 <body>
 
-    <!-- WhatsApp Button -->
     <a href="https://wa.me/254110049657?text=Payment%20Help" 
        target="_blank" 
        class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
@@ -47,7 +40,6 @@
     </a>
 
     <div class="container mx-auto px-4 py-8 max-w-md">
-        <!-- Logo - Using icon instead of image to avoid 404 -->
         <div class="text-center mb-6">
             <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <i class="fas fa-graduation-cap text-4xl text-white"></i>
@@ -56,7 +48,6 @@
             <p class="text-white/80" id="selectedClassDisplay"></p>
         </div>
 
-        <!-- Payment Card -->
         <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
             <div class="bg-primary/10 rounded-xl p-4 mb-6 text-center">
                 <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -74,12 +65,21 @@
             <form id="paymentForm">
                 <div class="mb-4">
                     <label class="block text-gray-700 font-semibold mb-2">
+                        <i class="fas fa-user text-primary mr-2"></i> Your Name
+                    </label>
+                    <input type="text" id="name" placeholder="John Doe" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary"
+                           required>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">
                         <i class="fas fa-phone-alt text-primary mr-2"></i> M-Pesa Phone Number
                     </label>
                     <input type="tel" id="phone" placeholder="0712345678" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary"
                            required>
-                    <p class="text-xs text-gray-500 mt-1">Enter Safaricom number registered on M-Pesa</p>
+                    <p class="text-xs text-gray-500 mt-1">Safaricom number registered on M-Pesa</p>
                 </div>
                 
                 <div class="mb-6">
@@ -87,12 +87,12 @@
                         <i class="fas fa-envelope text-primary mr-2"></i> Email (Optional)
                     </label>
                     <input type="email" id="email" placeholder="your@email.com" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition">
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary">
                 </div>
 
                 <button type="submit" id="payBtn" 
                         class="w-full bg-primary text-white py-3 rounded-xl font-bold text-lg hover:bg-orange-700 transition shadow-lg">
-                    <i class="fas fa-money-bill-wave mr-2"></i> Pay 20 KES via M-Pesa
+                    <i class="fas fa-credit-card mr-2"></i> Pay 20 KES via PesaPal
                 </button>
             </form>
 
@@ -101,10 +101,11 @@
             <div class="mt-6 p-4 bg-gray-50 rounded-xl">
                 <p class="text-sm font-semibold text-gray-700 mb-2"><i class="fas fa-info-circle text-primary mr-2"></i> How it works:</p>
                 <ul class="text-xs text-gray-600 space-y-1">
-                    <li>1. Enter your M-Pesa phone number</li>
+                    <li>1. Enter your name and M-Pesa number</li>
                     <li>2. Click "Pay 20 KES"</li>
-                    <li>3. Enter PIN on your phone</li>
-                    <li>4. Instant 8-hour access</li>
+                    <li>3. You'll be redirected to PesaPal secure payment page</li>
+                    <li>4. Choose M-Pesa or Card to complete payment</li>
+                    <li>5. Return to dashboard for instant access</li>
                 </ul>
             </div>
 
@@ -116,21 +117,82 @@
         </div>
     </div>
 
-    <!-- Supabase Client -->
-    <script src="js/supabase-client.js"></script>
-    
-    <!-- Payment JS (self-contained with all functions) -->
-    <script src="js/payment.js"></script>
-    
     <script>
-        // Display selected class
         const selectedClass = localStorage.getItem('selectedClass');
         const classDisplay = document.getElementById('selectedClassDisplay');
+        
         if (selectedClass && selectedClass !== 'null') {
             classDisplay.textContent = selectedClass.toUpperCase().replace('GRADE', 'Grade ');
         } else {
             window.location.href = 'select-class.html';
         }
+        
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const payBtn = document.getElementById('payBtn');
+            const statusDiv = document.getElementById('paymentStatus');
+            
+            // Validate phone
+            const phoneRegex = /^(07|01|2547|2541)\d{8}$/;
+            if (!phoneRegex.test(phone)) {
+                statusDiv.className = 'mt-4 p-3 bg-red-100 text-red-700 rounded-xl';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Please enter a valid phone number (e.g., 0712345678)';
+                statusDiv.classList.remove('hidden');
+                return;
+            }
+            
+            if (!name) {
+                statusDiv.className = 'mt-4 p-3 bg-red-100 text-red-700 rounded-xl';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Please enter your name';
+                statusDiv.classList.remove('hidden');
+                return;
+            }
+            
+            payBtn.disabled = true;
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-pulse mr-2"></i> Processing...';
+            
+            try {
+                const response = await fetch('/api/pesapal-payment.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        email: email || 'student@niconxlearning.co.ke',
+                        amount: 20,
+                        class_level: selectedClass
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success && result.redirect_url) {
+                    // Store order info
+                    localStorage.setItem('userPhone', phone);
+                    localStorage.setItem('orderTrackingId', result.order_tracking_id);
+                    localStorage.setItem('merchantReference', result.merchant_reference);
+                    
+                    // Redirect to PesaPal payment page
+                    window.location.href = result.redirect_url;
+                } else {
+                    statusDiv.className = 'mt-4 p-3 bg-red-100 text-red-700 rounded-xl';
+                    statusDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> ' + (result.message || 'Payment initiation failed');
+                    statusDiv.classList.remove('hidden');
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = '<i class="fas fa-credit-card mr-2"></i> Pay 20 KES via PesaPal';
+                }
+            } catch (error) {
+                statusDiv.className = 'mt-4 p-3 bg-red-100 text-red-700 rounded-xl';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Network error. Please try again.';
+                statusDiv.classList.remove('hidden');
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fas fa-credit-card mr-2"></i> Pay 20 KES via PesaPal';
+            }
+        });
     </script>
 </body>
 </html>
