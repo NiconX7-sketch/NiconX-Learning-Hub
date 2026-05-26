@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - NiconX Learning Hub</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js"></script>
+    <!-- TinyMCE Rich Text Editor -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     
     <style>
-        body {
-            background: #f3f4f6;
-        }
+        body { background: #f3f4f6; }
         .sidebar-item {
             transition: all 0.2s ease;
+            cursor: pointer;
         }
         .sidebar-item:hover {
             background: rgba(255, 107, 53, 0.1);
@@ -30,6 +31,17 @@
         }
         .stat-card:hover {
             transform: translateY(-3px);
+        }
+        .question-item {
+            transition: all 0.2s ease;
+            background: #f9fafb;
+        }
+        .question-item:hover {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .tox-tinymce {
+            border-radius: 12px !important;
         }
     </style>
     
@@ -73,27 +85,28 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-white shadow-lg">
             <nav class="py-4">
-                <a href="#" onclick="showSection('dashboard'); return false;" class="sidebar-item active flex items-center px-6 py-3 text-gray-700 font-medium" id="navDashboard">
+                <div onclick="showSection('dashboard')" class="sidebar-item active flex items-center px-6 py-3 text-gray-700 font-medium" id="navDashboard">
                     <i class="fas fa-chart-line w-5 mr-3"></i> Dashboard
-                </a>
-                <a href="#" onclick="showSection('addContent'); return false;" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navAddContent">
+                </div>
+                <div onclick="showSection('addContent')" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navAddContent">
                     <i class="fas fa-plus-circle w-5 mr-3"></i> Add Content
-                </a>
-                <a href="#" onclick="showSection('manageContent'); return false;" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navManageContent">
+                </div>
+                <div onclick="showSection('manageContent')" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navManageContent">
                     <i class="fas fa-database w-5 mr-3"></i> Manage Content
-                </a>
-                <a href="#" onclick="showSection('reviews'); return false;" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navReviews">
+                </div>
+                <div onclick="showSection('reviews')" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navReviews">
                     <i class="fas fa-star w-5 mr-3"></i> Reviews
-                </a>
-                <a href="#" onclick="showSection('messages'); return false;" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navMessages">
+                </div>
+                <div onclick="showSection('messages')" class="sidebar-item flex items-center px-6 py-3 text-gray-600 font-medium" id="navMessages">
                     <i class="fas fa-envelope w-5 mr-3"></i> Contact Messages
-                </a>
+                </div>
             </nav>
         </aside>
 
         <!-- Main Content -->
         <main class="flex-1 p-6">
-            <!-- Dashboard Section -->
+            
+            <!-- ==================== DASHBOARD SECTION ==================== -->
             <div id="dashboardSection">
                 <h2 class="text-2xl font-bold text-secondary mb-6">Dashboard Overview</h2>
                 <div class="grid md:grid-cols-4 gap-5 mb-8">
@@ -145,17 +158,17 @@
                 <div class="bg-white rounded-xl shadow-md p-6">
                     <h3 class="font-bold text-secondary mb-3">Quick Actions</h3>
                     <div class="flex gap-3 flex-wrap">
-                        <a href="#" onclick="showSection('addContent'); return false;" class="bg-primary text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-700">
+                        <button onclick="showSection('addContent')" class="bg-primary text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-700">
                             <i class="fas fa-plus mr-1"></i> Add New Topic
-                        </a>
-                        <a href="#" onclick="exportAllData(); return false;" class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-secondary/80">
+                        </button>
+                        <button onclick="exportAllData()" class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-secondary/80">
                             <i class="fas fa-download mr-1"></i> Export Backup
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Add Content Section -->
+            <!-- ==================== ADD CONTENT SECTION ==================== -->
             <div id="addContentSection" class="hidden">
                 <h2 class="text-2xl font-bold text-secondary mb-6">Add New Content</h2>
                 <div class="bg-white rounded-xl shadow-md p-6">
@@ -168,6 +181,12 @@
                                     <option value="grade4">Grade 4</option>
                                     <option value="grade5">Grade 5</option>
                                     <option value="grade6">Grade 6</option>
+                                    <option value="grade7">Grade 7</option>
+                                    <option value="grade8">Grade 8</option>
+                                    <option value="form1">Form 1</option>
+                                    <option value="form2">Form 2</option>
+                                    <option value="form3">Form 3</option>
+                                    <option value="form4">Form 4</option>
                                 </select>
                             </div>
                             <div>
@@ -176,8 +195,20 @@
                                     <option value="">Select Subject</option>
                                     <option value="Mathematics">Mathematics</option>
                                     <option value="English">English</option>
+                                    <option value="Kiswahili">Kiswahili</option>
                                     <option value="Science">Science</option>
                                     <option value="Social Studies">Social Studies</option>
+                                    <option value="Integrated Science">Integrated Science</option>
+                                    <option value="Biology">Biology</option>
+                                    <option value="Chemistry">Chemistry</option>
+                                    <option value="Physics">Physics</option>
+                                    <option value="History">History</option>
+                                    <option value="Geography">Geography</option>
+                                    <option value="CRE">CRE</option>
+                                    <option value="IRE">IRE</option>
+                                    <option value="HRE">HRE</option>
+                                    <option value="Business Studies">Business Studies</option>
+                                    <option value="Pre-Technical Studies">Pre-Technical Studies</option>
                                 </select>
                             </div>
                         </div>
@@ -201,20 +232,43 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2">Notes (HTML) *</label>
-                            <textarea id="notesEditor" rows="12" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
-                            <p class="text-xs text-gray-500 mt-1">Use the toolbar to format text and add images. For images, use image URLs from Unsplash or other free sources.</p>
+                            <label class="block text-gray-700 font-semibold mb-2">Notes (Rich Text Editor) *</label>
+                            <textarea id="notesEditor" rows="15" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">
+                                <i class="fas fa-info-circle mr-1"></i> Use the toolbar to format text, add images, tables, and more.
+                            </p>
                         </div>
 
+                        <!-- Quick Image Insert -->
+                        <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+                            <label class="block text-gray-700 font-semibold mb-2">
+                                <i class="fas fa-image text-primary mr-2"></i> Quick Image Insert
+                            </label>
+                            <div class="flex gap-2">
+                                <input type="url" id="imageUrl" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Paste image URL (Unsplash, Imgur, etc.)">
+                                <button type="button" onclick="insertImage()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-orange-700">
+                                    <i class="fas fa-plus mr-1"></i> Insert
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">
+                                Free image sources: <a href="https://unsplash.com" target="_blank" class="text-primary">Unsplash</a> | 
+                                <a href="https://pixabay.com" target="_blank" class="text-primary">Pixabay</a> | 
+                                <a href="https://placehold.co" target="_blank" class="text-primary">Placeholder</a>
+                            </p>
+                        </div>
+
+                        <!-- Practice Questions -->
                         <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-2">Practice Questions</label>
+                            <label class="block text-gray-700 font-semibold mb-2">
+                                <i class="fas fa-puzzle-piece text-primary mr-2"></i> Practice Questions
+                            </label>
                             <div id="questionsContainer">
-                                <div class="question-item border rounded-lg p-4 mb-3 bg-gray-50">
+                                <div class="question-item border rounded-lg p-4 mb-3">
                                     <div class="flex justify-between items-center mb-2">
                                         <h4 class="font-semibold">Question 1</h4>
-                                        <button type="button" onclick="removeQuestion(this)" class="text-red-500 text-sm">Remove</button>
+                                        <button type="button" onclick="removeQuestion(this)" class="text-red-500 text-sm hover:text-red-700">Remove</button>
                                     </div>
-                                    <input type="text" class="question-text w-full px-3 py-2 border rounded-lg mb-2" placeholder="Question text">
+                                    <input type="text" class="question-text w-full px-3 py-2 border rounded-lg mb-2" placeholder="Enter your question">
                                     <select class="question-type w-full px-3 py-2 border rounded-lg mb-2" onchange="toggleOptions(this)">
                                         <option value="mcq">Multiple Choice</option>
                                         <option value="short">Short Answer</option>
@@ -228,38 +282,59 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" onclick="addQuestion()" class="mt-2 text-primary font-semibold">
-                                <i class="fas fa-plus-circle"></i> Add Another Question
+                            <button type="button" onclick="addQuestion()" class="mt-2 text-primary font-semibold hover:text-orange-700">
+                                <i class="fas fa-plus-circle mr-1"></i> Add Another Question
                             </button>
                         </div>
 
                         <div class="flex gap-3 mt-6">
-                            <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-700">Publish Content</button>
-                            <button type="reset" class="border border-gray-300 px-6 py-2 rounded-lg font-semibold">Clear</button>
+                            <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-700 transition">
+                                <i class="fas fa-save mr-2"></i> Publish Content
+                            </button>
+                            <button type="button" onclick="previewContent()" class="bg-gray-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-600 transition">
+                                <i class="fas fa-eye mr-2"></i> Preview
+                            </button>
+                            <button type="reset" class="border border-gray-300 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition">
+                                Clear Form
+                            </button>
                         </div>
                     </form>
                     <div id="messageBox" class="mt-4 hidden"></div>
                 </div>
             </div>
 
-            <!-- Manage Content Section -->
+            <!-- ==================== MANAGE CONTENT SECTION ==================== -->
             <div id="manageContentSection" class="hidden">
                 <h2 class="text-2xl font-bold text-secondary mb-6">Manage Content</h2>
                 <div class="bg-white rounded-xl shadow-md p-6">
-                    <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="grid md:grid-cols-3 gap-4 mb-6">
                         <select id="filterClass" class="px-4 py-2 border rounded-lg" onchange="loadContentList()">
                             <option value="">All Classes</option>
                             <option value="grade4">Grade 4</option>
                             <option value="grade5">Grade 5</option>
                             <option value="grade6">Grade 6</option>
+                            <option value="grade7">Grade 7</option>
+                            <option value="grade8">Grade 8</option>
+                            <option value="form1">Form 1</option>
+                            <option value="form2">Form 2</option>
+                            <option value="form3">Form 3</option>
+                            <option value="form4">Form 4</option>
                         </select>
                         <select id="filterSubject" class="px-4 py-2 border rounded-lg" onchange="loadContentList()">
                             <option value="">All Subjects</option>
                             <option value="Mathematics">Mathematics</option>
                             <option value="English">English</option>
+                            <option value="Kiswahili">Kiswahili</option>
                             <option value="Science">Science</option>
                             <option value="Social Studies">Social Studies</option>
+                            <option value="Integrated Science">Integrated Science</option>
+                            <option value="Biology">Biology</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Physics">Physics</option>
+                            <option value="History">History</option>
+                            <option value="Geography">Geography</option>
                         </select>
+                        <input type="text" id="searchContent" placeholder="Search by topic..." class="px-4 py-2 border rounded-lg" onkeyup="filterContentList()">
                     </div>
                     <div id="contentList" class="space-y-3">
                         <div class="text-center text-gray-500 py-8">Loading content...</div>
@@ -267,7 +342,7 @@
                 </div>
             </div>
 
-            <!-- Reviews Section -->
+            <!-- ==================== REVIEWS SECTION ==================== -->
             <div id="reviewsSection" class="hidden">
                 <h2 class="text-2xl font-bold text-secondary mb-6">Manage Reviews</h2>
                 <div class="bg-white rounded-xl shadow-md p-6">
@@ -277,7 +352,7 @@
                 </div>
             </div>
 
-            <!-- Contact Messages Section -->
+            <!-- ==================== MESSAGES SECTION ==================== -->
             <div id="messagesSection" class="hidden">
                 <h2 class="text-2xl font-bold text-secondary mb-6">Contact Messages</h2>
                 <div class="bg-white rounded-xl shadow-md p-6">
@@ -289,58 +364,90 @@
         </main>
     </div>
 
-    <script src="../../js/supabase-client.js"></script>
+    <script src="../js/supabase-client.js"></script>
     <script>
-        // Supabase configuration
-        const SUPABASE_URL = 'https://pqzxjqokyaxdxqilbaoo.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxenhqcW9reWF4ZHhxaWxiYW9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0Mjc1ODksImV4cCI6MjA5NTAwMzU4OX0.7tYky-gjsrHLDkOt68diB1CjmSnI92tpNgjg505nNdM';
-        const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        let questions = [];
-
-        // Check admin auth
-        function checkAdminAuth() {
-            const isLoggedIn = localStorage.getItem('adminLoggedIn');
-            if (!isLoggedIn) {
-                window.location.href = 'login.html';
+        // Admin credentials
+        const ADMIN_USERNAME = 'niconx_admin';
+        const ADMIN_PASSWORD = 'NiconX@2026Admin';
+        
+        let editor = null;
+        
+        // Initialize TinyMCE
+        function initTinyMCE() {
+            tinymce.init({
+                selector: '#notesEditor',
+                height: 450,
+                menubar: 'file edit view insert format tools table help',
+                plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+                toolbar: 'undo redo | formatselect | bold italic underline backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image link | table | code preview',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; } img { max-width: 100%; border-radius: 8px; margin: 10px 0; }',
+                images_upload_handler: function(blobInfo, progress) {
+                    return new Promise((resolve) => {
+                        const url = prompt('Enter image URL:', 'https://placehold.co/600x400/FF6B35/white?text=Image');
+                        resolve(url);
+                    });
+                },
+                setup: function(ed) {
+                    editor = ed;
+                }
+            });
+        }
+        
+        // Insert image into editor
+        function insertImage() {
+            const imageUrl = document.getElementById('imageUrl').value;
+            if (imageUrl && editor) {
+                editor.insertContent(`<img src="${imageUrl}" alt="Educational image" style="max-width:100%; border-radius:8px; margin:10px 0;">`);
+                document.getElementById('imageUrl').value = '';
+                showMessage('Image inserted successfully!', 'success');
+            } else if (!editor) {
+                alert('Editor not ready. Please wait.');
             } else {
-                document.getElementById('adminName').textContent = localStorage.getItem('adminUsername') || 'Admin';
+                alert('Please enter an image URL');
             }
         }
-
-        function adminLogout() {
-            localStorage.removeItem('adminLoggedIn');
-            localStorage.removeItem('adminUsername');
-            window.location.href = 'login.html';
+        
+        // Preview content
+        function previewContent() {
+            if (!editor) return;
+            const content = editor.getContent();
+            const topic = document.getElementById('topic').value || 'Preview';
+            const previewWindow = window.open('', '_blank');
+            previewWindow.document.write(`
+                <html>
+                <head>
+                    <title>Preview - ${topic}</title>
+                    <script src="https://cdn.tailwindcss.com"><\/script>
+                    <style>
+                        body { padding: 20px; max-width: 800px; margin: 0 auto; font-family: sans-serif; line-height: 1.6; }
+                        img { max-width: 100%; border-radius: 8px; margin: 10px 0; }
+                        h1 { color: #1A3A5F; }
+                        h2 { color: #FF6B35; margin-top: 20px; }
+                        .premium-badge { background: #FF6B35; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; display: inline-block; }
+                    </style>
+                </head>
+                <body>
+                    <h1>${escapeHtml(topic)}</h1>
+                    ${document.getElementById('isFree').checked ? '<span class="premium-badge">FREE Topic</span>' : '<span class="premium-badge" style="background:#6B7280;">Premium Topic</span>'}
+                    <hr class="my-4">
+                    ${content}
+                </body>
+                </html>
+            `);
         }
-
-        // TinyMCE initialization
-        tinymce.init({
-            selector: '#notesEditor',
-            height: 400,
-            menubar: true,
-            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image link | preview code',
-            images_upload_handler: function(blobInfo, progress) {
-                return new Promise((resolve) => {
-                    const url = prompt('Enter image URL:', 'https://placehold.co/600x400/FF6B35/white?text=Image');
-                    resolve(url);
-                });
-            }
-        });
-
-        // Question functions
+        
+        // Add question
         function addQuestion() {
             const container = document.getElementById('questionsContainer');
             const questionDiv = document.createElement('div');
             const questionCount = container.children.length + 1;
-            questionDiv.className = 'question-item border rounded-lg p-4 mb-3 bg-gray-50';
+            questionDiv.className = 'question-item border rounded-lg p-4 mb-3';
             questionDiv.innerHTML = `
                 <div class="flex justify-between items-center mb-2">
                     <h4 class="font-semibold">Question ${questionCount}</h4>
-                    <button type="button" onclick="removeQuestion(this)" class="text-red-500 text-sm">Remove</button>
+                    <button type="button" onclick="removeQuestion(this)" class="text-red-500 text-sm hover:text-red-700">Remove</button>
                 </div>
-                <input type="text" class="question-text w-full px-3 py-2 border rounded-lg mb-2" placeholder="Question text">
+                <input type="text" class="question-text w-full px-3 py-2 border rounded-lg mb-2" placeholder="Enter your question">
                 <select class="question-type w-full px-3 py-2 border rounded-lg mb-2" onchange="toggleOptions(this)">
                     <option value="mcq">Multiple Choice</option>
                     <option value="short">Short Answer</option>
@@ -355,7 +462,7 @@
             `;
             container.appendChild(questionDiv);
         }
-
+        
         function removeQuestion(btn) {
             btn.closest('.question-item').remove();
             const questions = document.querySelectorAll('.question-item');
@@ -363,7 +470,7 @@
                 q.querySelector('h4').textContent = `Question ${idx + 1}`;
             });
         }
-
+        
         function toggleOptions(select) {
             const optionsDiv = select.closest('.question-item').querySelector('.mcq-options');
             if (select.value === 'short') {
@@ -372,10 +479,15 @@
                 optionsDiv.style.display = 'block';
             }
         }
-
-        // Submit content to Supabase
+        
+        // Submit content
         document.getElementById('contentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            if (!editor) {
+                showMessage('Editor not initialized. Please refresh.', 'error');
+                return;
+            }
             
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
@@ -405,42 +517,36 @@
                 subject: document.getElementById('subject').value,
                 topic: document.getElementById('topic').value,
                 topic_order: parseInt(document.getElementById('topicOrder').value) || 1,
-                notes: tinymce.get('notesEditor').getContent(),
+                notes: editor.getContent(),
                 questions: questionsData,
-                is_free: document.getElementById('isFree').checked,
-                created_at: new Date().toISOString()
+                is_free: document.getElementById('isFree').checked
             };
             
             if (!contentData.class_level || !contentData.subject || !contentData.topic) {
-                showMessage('Please fill in all required fields', 'error');
+                showMessage('Please fill in Class, Subject, and Topic', 'error');
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
                 return;
             }
             
-            try {
-                const { data, error } = await supabase
-                    .from('content')
-                    .insert([contentData]);
-                
-                if (error) throw error;
-                
+            const result = await addContent(contentData);
+            
+            if (result.success) {
                 showMessage('Content published successfully!', 'success');
                 document.getElementById('contentForm').reset();
-                tinymce.get('notesEditor').setContent('');
+                if (editor) editor.setContent('');
                 document.getElementById('questionsContainer').innerHTML = '';
                 addQuestion();
                 loadAdminStats();
                 loadContentList();
-                
-            } catch (error) {
-                showMessage('Error: ' + error.message, 'error');
+            } else {
+                showMessage('Error: ' + result.error, 'error');
             }
             
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
         });
-
+        
         function showMessage(msg, type) {
             const msgBox = document.getElementById('messageBox');
             msgBox.className = `mt-4 p-3 rounded-lg ${type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
@@ -448,29 +554,25 @@
             msgBox.classList.remove('hidden');
             setTimeout(() => msgBox.classList.add('hidden'), 3000);
         }
-
-        // Load admin stats
+        
+        // Load stats
         async function loadAdminStats() {
-            const { data: content } = await supabase.from('content').select('*');
-            const { data: payments } = await supabase.from('payment_sessions').select('*');
-            
-            if (content) {
-                document.getElementById('totalTopics').textContent = content.length;
-                document.getElementById('freeTopics').textContent = content.filter(c => c.is_free).length;
-                document.getElementById('premiumTopics').textContent = content.filter(c => !c.is_free).length;
-            }
-            if (payments) {
-                document.getElementById('totalPayments').textContent = payments.length;
+            const result = await getAdminStats();
+            if (result.success && result.stats) {
+                document.getElementById('totalTopics').textContent = result.stats.totalTopics;
+                document.getElementById('freeTopics').textContent = result.stats.freeTopics;
+                document.getElementById('premiumTopics').textContent = result.stats.premiumTopics;
+                document.getElementById('totalPayments').textContent = result.stats.totalPayments;
             }
         }
-
+        
         // Load content list
         async function loadContentList() {
             const filterClass = document.getElementById('filterClass').value;
             const filterSubject = document.getElementById('filterSubject').value;
             const container = document.getElementById('contentList');
             
-            let query = supabase.from('content').select('*').order('created_at', { ascending: false });
+            let query = supabaseClient.from('content').select('*').order('created_at', { ascending: false });
             if (filterClass) query = query.eq('class_level', filterClass);
             if (filterSubject) query = query.eq('subject', filterSubject);
             
@@ -486,33 +588,51 @@
                     <div class="flex justify-between items-start flex-wrap gap-2">
                         <div class="flex-1">
                             <div class="flex gap-2 mb-2 flex-wrap">
-                                <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">${content.class_level.toUpperCase()}</span>
+                                <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">${content.class_level}</span>
                                 <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">${content.subject}</span>
                                 ${content.is_free ? '<span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-600"><i class="fas fa-gift"></i> Free</span>' : '<span class="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary"><i class="fas fa-lock"></i> Premium</span>'}
                             </div>
                             <h3 class="font-bold text-secondary">${escapeHtml(content.topic)}</h3>
-                            <p class="text-xs text-gray-400 mt-1">${content.questions ? content.questions.length : 0} questions | Created: ${new Date(content.created_at).toLocaleDateString()}</p>
+                            <p class="text-xs text-gray-400 mt-1">Order: ${content.topic_order} | Questions: ${content.questions ? content.questions.length : 0}</p>
                         </div>
-                        <button onclick="deleteContent('${content.id}')" class="text-red-500 hover:text-red-700 p-2">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+                        <div class="flex gap-2">
+                            <button onclick="editContent('${content.id}')" class="text-blue-500 hover:text-blue-700 p-2"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteContent('${content.id}')" class="text-red-500 hover:text-red-700 p-2"><i class="fas fa-trash-alt"></i></button>
+                        </div>
                     </div>
                 </div>
             `).join('');
         }
-
+        
         async function deleteContent(id) {
             if (!confirm('Delete this content permanently?')) return;
-            const { error } = await supabase.from('content').delete().eq('id', id);
-            if (error) {
-                alert('Error deleting');
-            } else {
+            const result = await deleteContent(id);
+            if (result.success) {
                 loadContentList();
                 loadAdminStats();
                 showMessage('Content deleted', 'success');
+            } else {
+                showMessage('Error deleting', 'error');
             }
         }
-
+        
+        function editContent(id) {
+            showMessage('Edit feature - Click Add New Content to create updated version, then delete old one.', 'info');
+        }
+        
+        function filterContentList() {
+            const searchTerm = document.getElementById('searchContent').value.toLowerCase();
+            const items = document.querySelectorAll('#contentList > div');
+            items.forEach(item => {
+                const title = item.querySelector('h3')?.innerText.toLowerCase() || '';
+                if (title.includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
         // Load reviews
         function loadReviews() {
             const reviews = JSON.parse(localStorage.getItem('niconx_reviews') || '[]');
@@ -538,22 +658,22 @@
                 </div>
             `).join('');
         }
-
+        
         function approveReview(id) {
             let reviews = JSON.parse(localStorage.getItem('niconx_reviews') || '[]');
             reviews = reviews.map(r => r.id === id ? { ...r, approved: true } : r);
             localStorage.setItem('niconx_reviews', JSON.stringify(reviews));
             loadReviews();
         }
-
+        
         function deleteReview(id) {
             let reviews = JSON.parse(localStorage.getItem('niconx_reviews') || '[]');
             reviews = reviews.filter(r => r.id !== id);
             localStorage.setItem('niconx_reviews', JSON.stringify(reviews));
             loadReviews();
         }
-
-        // Load contact messages
+        
+        // Load messages
         function loadMessages() {
             const messages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
             const container = document.getElementById('messagesList');
@@ -564,8 +684,8 @@
             container.innerHTML = messages.map(msg => `
                 <div class="border rounded-lg p-4 bg-white">
                     <div class="flex justify-between items-start">
-                        <div class="flex-1">
-                            <div class="flex gap-2 mb-2 flex-wrap">
+                        <div>
+                            <div class="flex gap-2 mb-2">
                                 <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">${escapeHtml(msg.subject)}</span>
                                 <span class="text-xs px-2 py-1 rounded-full ${msg.status === 'unread' ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'}">${msg.status}</span>
                             </div>
@@ -574,29 +694,29 @@
                             <p class="text-gray-700 mt-2">${escapeHtml(msg.message)}</p>
                             <p class="text-xs text-gray-400 mt-2">${new Date(msg.date).toLocaleString()}</p>
                         </div>
-                        <button onclick="markMessageRead('${msg.id}')" class="text-green-500 ml-3"><i class="fas fa-check-circle"></i></button>
+                        <button onclick="markMessageRead('${msg.id}')" class="text-green-500"><i class="fas fa-check-circle"></i></button>
                     </div>
                 </div>
             `).join('');
         }
-
+        
         function markMessageRead(id) {
             let messages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
             messages = messages.map(m => m.id == id ? { ...m, status: 'read' } : m);
             localStorage.setItem('contact_messages', JSON.stringify(messages));
             loadMessages();
         }
-
+        
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
-
+        
         function exportAllData() {
             const data = {
-                content: JSON.parse(localStorage.getItem('niconx_content') || '[]'),
+                content: [],
                 reviews: JSON.parse(localStorage.getItem('niconx_reviews') || '[]'),
                 messages: JSON.parse(localStorage.getItem('contact_messages') || '[]')
             };
@@ -608,8 +728,7 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-
-        // Section navigation
+        
         function showSection(section) {
             document.getElementById('dashboardSection').classList.add('hidden');
             document.getElementById('addContentSection').classList.add('hidden');
@@ -619,20 +738,42 @@
             
             document.getElementById(`${section}Section`).classList.remove('hidden');
             
-            ['navDashboard', 'navAddContent', 'navManageContent', 'navReviews', 'navMessages'].forEach(id => {
-                document.getElementById(id).classList.remove('active', 'text-primary', 'bg-primary/15');
-                document.getElementById(id).classList.add('text-gray-600');
+            const sections = ['Dashboard', 'AddContent', 'ManageContent', 'Reviews', 'Messages'];
+            sections.forEach(s => {
+                const nav = document.getElementById(`nav${s}`);
+                if (nav) {
+                    nav.classList.remove('active', 'text-primary', 'bg-primary/15');
+                    nav.classList.add('text-gray-600');
+                }
             });
-            document.getElementById(`nav${section.charAt(0).toUpperCase() + section.slice(1)}`).classList.add('active', 'text-primary', 'bg-primary/15');
+            const activeNav = document.getElementById(`nav${section.charAt(0).toUpperCase() + section.slice(1)}`);
+            if (activeNav) {
+                activeNav.classList.add('active', 'text-primary', 'bg-primary/15');
+            }
             
             if (section === 'manageContent') loadContentList();
             if (section === 'reviews') loadReviews();
             if (section === 'messages') loadMessages();
             if (section === 'dashboard') loadAdminStats();
         }
-
+        
+        function adminLogout() {
+            localStorage.removeItem('adminLoggedIn');
+            window.location.href = 'login.html';
+        }
+        
+        function checkAdminAuth() {
+            const isLoggedIn = localStorage.getItem('adminLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            } else {
+                document.getElementById('adminName').textContent = localStorage.getItem('adminUsername') || 'Admin';
+            }
+        }
+        
         // Initialize
         checkAdminAuth();
+        initTinyMCE();
         loadAdminStats();
         addQuestion();
     </script>
