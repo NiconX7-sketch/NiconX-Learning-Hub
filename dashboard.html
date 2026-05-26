@@ -4,18 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>My Dashboard - NiconX Learning Hub</title>
-    <meta name="description" content="Access your revision notes and practice questions for Grade 4-6 Kenyan curriculum.">
-    
-    <!-- TailwindCSS -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Custom CSS -->
+    <script src="js/supabase-client.js"></script>
     <link rel="stylesheet" href="css/style.css">
     
     <script>
@@ -30,11 +23,35 @@
             }
         }
     </script>
+    <style>
+        .subject-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+        .topic-item {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .topic-item:hover {
+            background-color: #f3f4f6;
+            transform: translateX(5px);
+        }
+        .back-button {
+            transition: all 0.2s ease;
+        }
+        .back-button:hover {
+            transform: translateX(-3px);
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20with%20my%20studies" 
+    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub" 
        target="_blank" 
        class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
         <i class="fab fa-whatsapp text-2xl"></i>
@@ -45,7 +62,9 @@
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center flex-wrap gap-3">
                 <div class="flex items-center space-x-3">
-                    <img src="images/logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">N</span>
+                    </div>
                     <div>
                         <h1 class="text-lg font-bold text-secondary">NiconX Learning Hub</h1>
                         <p class="text-xs text-gray-500" id="timerDisplay">Checking access...</p>
@@ -65,12 +84,13 @@
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-8 max-w-6xl">
+        
         <!-- Welcome Banner -->
         <div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-5 mb-8 text-white">
             <div class="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                    <h2 class="text-xl font-bold">Welcome Back! 👋</h2>
-                    <p class="text-white/80 text-sm">Continue your revision journey. Choose a topic below to start learning.</p>
+                    <h2 class="text-xl font-bold" id="welcomeMessage">Welcome Back! 👋</h2>
+                    <p class="text-white/80 text-sm">Select a subject below to start learning.</p>
                 </div>
                 <div class="bg-white/20 rounded-full px-4 py-2">
                     <i class="fas fa-graduation-cap mr-2"></i>
@@ -86,150 +106,296 @@
                     <i class="fas fa-gift text-blue-500 text-xl mr-3"></i>
                     <div>
                         <p class="font-semibold text-blue-800">You're on Free Trial Mode</p>
-                        <p class="text-sm text-blue-600">Accessing 2 free topics. <a href="payment.html" class="underline font-semibold">Pay 20 KES</a> to unlock all premium content for 8 hours.</p>
+                        <p class="text-sm text-blue-600">Accessing 2 free topics per subject. <a href="payment.html" class="underline font-semibold">Pay 20 KES</a> to unlock all content for 8 hours.</p>
                     </div>
                 </div>
-                <a href="payment.html" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-orange-700">
-                    Upgrade Now
-                </a>
+                <a href="payment.html" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-orange-700">Upgrade Now</a>
             </div>
         </div>
 
-        <!-- Subjects Grid -->
-        <div id="subjectsContainer" class="grid md:grid-cols-2 gap-6">
-            <div class="col-span-2 text-center py-12">
-                <div class="spinner mx-auto"></d<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>My Dashboard - NiconX Learning Hub</title>
-    <meta name="description" content="Access your revision notes and practice questions for Grade 4-6 Kenyan curriculum.">
-    
-    <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
+        <!-- Subjects Grid (Shown by default) -->
+        <div id="subjectsView">
+            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                <i class="fas fa-book-open text-primary mr-2"></i> Your Subjects
+            </h3>
+            <div id="subjectsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="col-span-3 text-center py-12">
+                    <div class="spinner mx-auto"></div>
+                    <p class="text-gray-500 mt-4">Loading subjects...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topics View (Hidden initially, shown when subject is clicked) -->
+        <div id="topicsView" class="hidden">
+            <div class="mb-4">
+                <button onclick="showSubjectsView()" class="back-button text-primary hover:text-orange-700 font-semibold">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Subjects
+                </button>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 id="selectedSubjectTitle" class="text-2xl font-bold text-secondary mb-2"></h3>
+                <p id="selectedSubjectDesc" class="text-gray-500 mb-6">Select a topic to start learning</p>
+                <div id="topicsContainer" class="space-y-3">
+                    <div class="text-center py-8">Loading topics...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-12 py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-gray-500">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#FF6B35',
-                        secondary: '#1A3A5F',
-                    }
+        // Global variables
+        let currentSubjects = [];
+        let currentTopics = [];
+        let selectedSubject = '';
+        let isFreeTrial = false;
+        
+        const selectedClass = localStorage.getItem('selectedClass');
+        const userPhone = localStorage.getItem('userPhone');
+        isFreeTrial = new URLSearchParams(window.location.search).get('free') === 'true';
+        
+        // Display class name
+        document.getElementById('classDisplay').innerHTML = (selectedClass || 'Grade').toUpperCase().replace('GRADE', 'Grade ');
+        document.getElementById('welcomeMessage').innerHTML = `Welcome to ${(selectedClass || 'Grade').toUpperCase().replace('GRADE', 'Grade ')}! 👋`;
+        
+        // Initialize dashboard
+        async function initDashboard() {
+            // Check access if not free trial
+            if (!isFreeTrial && userPhone) {
+                const access = await checkUserAccess(userPhone, selectedClass);
+                if (!access.has_access) {
+                    alert('Your access has expired. Please pay 20 KES to continue.');
+                    window.location.href = 'payment.html';
+                    return;
                 }
+                if (access.expires_at) {
+                    localStorage.setItem('sessionExpires', access.expires_at);
+                    startExpiryTimer(access.expires_at);
+                }
+            } else if (isFreeTrial) {
+                const freeTrialNote = document.getElementById('freeTrialNote');
+                if (freeTrialNote) freeTrialNote.classList.remove('hidden');
+            } else if (!userPhone && !isFreeTrial) {
+                window.location.href = 'payment.html';
+                return;
+            }
+            
+            // Load subjects and topics
+            await loadSubjectsAndTopics();
+        }
+        
+        // Load subjects from database
+        async function loadSubjectsAndTopics() {
+            const result = await getClassContent(selectedClass);
+            
+            if (!result.success || result.data.length === 0) {
+                document.getElementById('subjectsContainer').innerHTML = `
+                    <div class="col-span-3 text-center py-12">
+                        <i class="fas fa-folder-open text-6xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500">No content available yet for this class.</p>
+                        <p class="text-sm text-gray-400 mt-2">Check back soon! New topics added weekly.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Group by subject
+            const subjectsMap = new Map();
+            result.data.forEach(item => {
+                if (!subjectsMap.has(item.subject)) {
+                    subjectsMap.set(item.subject, []);
+                }
+                subjectsMap.get(item.subject).push({
+                    id: item.id,
+                    title: item.topic,
+                    topic_order: item.topic_order,
+                    isLocked: !isFreeTrial && !item.is_free,
+                    is_free: item.is_free,
+                    notes: item.notes,
+                    questions: item.questions
+                });
+            });
+            
+            // Store for later use
+            currentSubjects = Array.from(subjectsMap.keys());
+            currentTopics = subjectsMap;
+            
+            // Render subjects grid
+            renderSubjectsGrid(subjectsMap);
+        }
+        
+        // Render subjects as cards
+        function renderSubjectsGrid(subjectsMap) {
+            const container = document.getElementById('subjectsContainer');
+            container.innerHTML = '';
+            
+            // Subject icons mapping
+            const subjectIcons = {
+                'Mathematics': 'fa-calculator',
+                'English': 'fa-book-open',
+                'Science': 'fa-microscope',
+                'Social Studies': 'fa-landmark',
+                'Kiswahili': 'fa-language',
+                'CRE': 'fa-church',
+                'IRE': 'fa-mosque',
+                'HRE': 'fa-church',
+                'Integrated Science': 'fa-flask',
+                'Pre-Technical Studies': 'fa-gear',
+                'Biology': 'fa-dna',
+                'Chemistry': 'fa-flask',
+                'Physics': 'fa-atom',
+                'History': 'fa-landmark',
+                'Geography': 'fa-globe-africa',
+                'Business Studies': 'fa-chart-line'
+            };
+            
+            for (let [subjectName, topics] of subjectsMap.entries()) {
+                const freeCount = topics.filter(t => t.is_free).length;
+                const lockedCount = topics.filter(t => t.isLocked).length;
+                const icon = subjectIcons[subjectName] || 'fa-graduation-cap';
+                
+                const subjectCard = document.createElement('div');
+                subjectCard.className = 'subject-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all cursor-pointer';
+                subjectCard.onclick = () => showTopicsView(subjectName, topics);
+                
+                subjectCard.innerHTML = `
+                    <div class="bg-gradient-to-r from-secondary to-primary/80 p-5 text-white">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas ${icon} text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">${escapeHtml(subjectName)}</h3>
+                                    <p class="text-white/70 text-xs">${topics.length} topics</p>
+                                </div>
+                            </div>
+                            <div class="text-right text-xs">
+                                <span class="bg-green-500/30 px-2 py-1 rounded-full">${freeCount} free</span>
+                                ${lockedCount > 0 ? `<span class="bg-orange-500/30 px-2 py-1 rounded-full ml-1">${lockedCount} premium</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center text-sm text-gray-500">
+                            <span><i class="fas fa-check-circle text-primary mr-1"></i> ${freeCount} Free Topics</span>
+                            <span class="text-primary">Click to explore →</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(subjectCard);
             }
         }
+        
+        // Show topics for selected subject
+        function showTopicsView(subjectName, topics) {
+            selectedSubject = subjectName;
+            
+            // Sort topics by order
+            topics.sort((a, b) => a.topic_order - b.topic_order);
+            
+            // Update header
+            document.getElementById('selectedSubjectTitle').textContent = subjectName;
+            document.getElementById('selectedSubjectDesc').textContent = `Choose a topic to start learning (${topics.length} topics available)`;
+            
+            // Render topics list
+            const topicsContainer = document.getElementById('topicsContainer');
+            topicsContainer.innerHTML = topics.map(topic => `
+                <div class="topic-item border border-gray-200 rounded-xl p-4 hover:bg-gray-50 transition flex justify-between items-center">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h4 class="font-semibold text-secondary">${escapeHtml(topic.title)}</h4>
+                            ${topic.isLocked ? 
+                                '<span class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full"><i class="fas fa-lock mr-1"></i> Premium</span>' : 
+                                '<span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full"><i class="fas fa-unlock-alt mr-1"></i> Free</span>'
+                            }
+                            ${topic.is_free ? '<span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full"><i class="fas fa-gift mr-1"></i> Trial</span>' : ''}
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">Practice questions available</p>
+                    </div>
+                    <button onclick="openTopic('${topic.id}', ${topic.isLocked}, event)" 
+                            class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition ml-3">
+                        ${topic.isLocked ? '<i class="fas fa-lock mr-1"></i> Unlock' : '<i class="fas fa-play mr-1"></i> Study'}
+                    </button>
+                </div>
+            `).join('');
+            
+            // Switch views
+            document.getElementById('subjectsView').classList.add('hidden');
+            document.getElementById('topicsView').classList.remove('hidden');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Show subjects view (back button)
+        function showSubjectsView() {
+            document.getElementById('topicsView').classList.add('hidden');
+            document.getElementById('subjectsView').classList.remove('hidden');
+        }
+        
+        // Open a topic
+        function openTopic(topicId, isLocked, event) {
+            event.stopPropagation();
+            
+            if (isLocked && !isFreeTrial) {
+                if (confirm('This is a premium topic. Pay 20 KES to unlock ALL topics for 8 hours?')) {
+                    window.location.href = 'payment.html';
+                }
+                return;
+            }
+            
+            localStorage.setItem('currentTopicId', topicId);
+            window.location.href = `view-content.html?topic=${topicId}`;
+        }
+        
+        // Start expiry timer
+        function startExpiryTimer(expiresAt) {
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (!timerDisplay) return;
+            
+            const updateTimer = () => {
+                const now = new Date().getTime();
+                const expiry = new Date(expiresAt).getTime();
+                const timeLeft = expiry - now;
+                
+                if (timeLeft <= 0) {
+                    timerDisplay.innerHTML = '<span class="text-red-500"><i class="fas fa-clock mr-1"></i> Access expired. <a href="payment.html" class="underline">Pay again</a></span>';
+                } else {
+                    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (3600000)) / 60000);
+                    timerDisplay.innerHTML = `<i class="fas fa-hourglass-half mr-1 text-primary"></i> Access expires in: <strong>${hours}h ${minutes}m</strong>`;
+                }
+            };
+            updateTimer();
+            setInterval(updateTimer, 60000);
+        }
+        
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+        
+        // Escape HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Initialize
+        initDashboard();
     </script>
-</head>
-<body class="bg-gray-100">
-
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub%2C%20I%20need%20help%20with%20my%20studies" 
-       target="_blank" 
-       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
-        <i class="fab fa-whatsapp text-2xl"></i>
-    </a>
-
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-40">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center flex-wrap gap-3">
-                <div class="flex items-center space-x-3">
-                    <img src="images/logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
-                    <div>
-                        <h1 class="text-lg font-bold text-secondary">NiconX Learning Hub</h1>
-                        <p class="text-xs text-gray-500" id="timerDisplay">Checking access...</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-sm font-semibold text-secondary" id="classDisplay"></p>
-                        <button onclick="logout()" class="text-red-500 text-sm hover:text-red-700">
-                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 py-8 max-w-6xl">
-        <!-- Welcome Banner -->
-        <div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-5 mb-8 text-white">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-                <div>
-                    <h2 class="text-xl font-bold">Welcome Back! 👋</h2>
-                    <p class="text-white/80 text-sm">Continue your revision journey. Choose a topic below to start learning.</p>
-                </div>
-                <div class="bg-white/20 rounded-full px-4 py-2">
-                    <i class="fas fa-graduation-cap mr-2"></i>
-                    <span class="text-sm font-semibold" id="sessionStatus">Active Session</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Free Trial Notice -->
-        <div id="freeTrialNote" class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-6 hidden">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-                <div class="flex items-center">
-                    <i class="fas fa-gift text-blue-500 text-xl mr-3"></i>
-                    <div>
-                        <p class="font-semibold text-blue-800">You're on Free Trial Mode</p>
-                        <p class="text-sm text-blue-600">Accessing 2 free topics. <a href="payment.html" class="underline font-semibold">Pay 20 KES</a> to unlock all premium content for 8 hours.</p>
-                    </div>
-                </div>
-                <a href="payment.html" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-orange-700">
-                    Upgrade Now
-                </a>
-            </div>
-        </div>
-
-        <!-- Subjects Grid -->
-        <div id="subjectsContainer" class="grid md:grid-cols-2 gap-6">
-            <div class="col-span-2 text-center py-12">
-                <div class="spinner mx-auto"></div>
-                <p class="text-gray-500 mt-4">Loading your topics...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t mt-12 py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p class="text-sm text-gray-500">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="js/supabase-client.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/content.js"></script>
-</body>
-</html>iv>
-                <p class="text-gray-500 mt-4">Loading your topics...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t mt-12 py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p class="text-sm text-gray-500">&copy; 2026 NiconX Learning Hub. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="js/supabase-client.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/content.js"></script>
 </body>
 </html>
