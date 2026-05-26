@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Processing - NiconX Learning Hub</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
+        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-spinner fa-pulse text-primary text-3xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-secondary mb-2">Processing Payment</h1>
+        <p class="text-gray-600 mb-4">Please wait while we confirm your payment...</p>
+        <p class="text-sm text-gray-500">You will be redirected automatically once confirmed.</p>
+    </div>
+    
+    <script>
+        const selectedClass = localStorage.getItem('selectedClass');
+        const userPhone = localStorage.getItem('userPhone');
+        
+        // Poll for payment confirmation
+        let attempts = 0;
+        const maxAttempts = 20; // 40 seconds
+        
+        const checkInterval = setInterval(async () => {
+            attempts++;
+            
+            if (userPhone && selectedClass && typeof supabaseClient !== 'undefined') {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('payment_sessions')
+                        .select('*')
+                        .eq('phone', userPhone)
+                        .eq('class_level', selectedClass)
+                        .eq('status', 'active')
+                        .order('paid_at', { ascending: false })
+                        .limit(1);
+                    
+                    if (data && data.length > 0) {
+                        clearInterval(checkInterval);
+                        localStorage.setItem('sessionExpires', data[0].expires_at);
+                        window.location.href = 'dashboard.html?payment=success';
+                    } else if (attempts >= maxAttempts) {
+                        clearInterval(checkInterval);
+                        window.location.href = 'dashboard.html?payment=pending';
+                    }
+                } catch(e) {
+                    if (attempts >= maxAttempts) {
+                        clearInterval(checkInterval);
+                        window.location.href = 'dashboard.html?payment=pending';
+                    }
+                }
+            } else if (attempts >= maxAttempts) {
+                clearInterval(checkInterval);
+                window.location.href = 'dashboard.html?payment=pending';
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
