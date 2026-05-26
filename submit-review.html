@@ -4,15 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Leave a Review - NiconX Learning Hub</title>
-    <meta name="description" content="Share your experience with NiconX Learning Hub. Your feedback helps us improve!">
-    
-    <!-- TailwindCSS -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     
     <script>
@@ -27,15 +22,32 @@
             }
         }
     </script>
+    <style>
+        .rating-star {
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .rating-star:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
 
-    <!-- Header -->
+    <a href="https://wa.me/254110049657?text=Hello%20NiconX%20Learning%20Hub" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition z-50">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
     <header class="bg-white shadow-lg sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center flex-wrap gap-3">
                 <div class="flex items-center space-x-3">
-                    <img src="images/logo.png" alt="NiconX Logo" class="h-12 w-auto md:h-14" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">N</span>
+                    </div>
                     <div>
                         <h1 class="text-xl md:text-2xl font-bold text-secondary">NiconX Learning Hub</h1>
                         <p class="text-xs md:text-sm text-primary font-semibold">Learn. Practice. Shine.</p>
@@ -51,10 +63,8 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <div class="container mx-auto px-4 py-12 max-w-3xl">
-        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
-            <!-- Header -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10" data-aos="fade-up">
             <div class="text-center mb-8">
                 <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-star text-primary text-3xl"></i>
@@ -66,23 +76,21 @@
             <!-- Rating Stars -->
             <div class="mb-8 text-center">
                 <p class="text-gray-700 font-semibold mb-3">How would you rate NiconX Learning Hub?</p>
-                <div class="flex justify-center gap-2 text-4xl" id="ratingStars">
-                    <i class="far fa-star cursor-pointer hover:text-primary transition rating-star" data-rating="1"></i>
-                    <i class="far fa-star cursor-pointer hover:text-primary transition rating-star" data-rating="2"></i>
-                    <i class="far fa-star cursor-pointer hover:text-primary transition rating-star" data-rating="3"></i>
-                    <i class="far fa-star cursor-pointer hover:text-primary transition rating-star" data-rating="4"></i>
-                    <i class="far fa-star cursor-pointer hover:text-primary transition rating-star" data-rating="5"></i>
+                <div class="flex justify-center gap-2" id="ratingStars">
+                    <i class="far fa-star rating-star" data-rating="1"></i>
+                    <i class="far fa-star rating-star" data-rating="2"></i>
+                    <i class="far fa-star rating-star" data-rating="3"></i>
+                    <i class="far fa-star rating-star" data-rating="4"></i>
+                    <i class="far fa-star rating-star" data-rating="5"></i>
                 </div>
                 <input type="hidden" id="selectedRating" value="0">
             </div>
 
-            <!-- Review Form -->
             <form id="reviewForm">
                 <div class="mb-4">
                     <label class="block text-gray-700 font-semibold mb-2">Your Name *</label>
                     <input type="text" id="reviewerName" required 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-                           placeholder="e.g., Mary Wanjiku">
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition">
                 </div>
                 
                 <div class="mb-4">
@@ -119,7 +127,6 @@
             </p>
         </div>
         
-        <!-- Back Link -->
         <div class="text-center mt-6">
             <a href="index.html" class="text-primary hover:underline">
                 <i class="fas fa-arrow-left mr-1"></i> Back to Home
@@ -127,50 +134,18 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-secondary text-white pt-12 pb-6 mt-12">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <img src="images/logo.png" alt="Logo" class="h-10" onerror="this.src='https://placehold.co/200x60/FF6B35/white?text=NiconX'">
-                        <span class="text-white font-bold text-lg">NiconX Learning Hub</span>
-                    </div>
-                    <p class="text-gray-300 text-sm">Empowering Kenyan learners with affordable, quality education resources.</p>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-3">Quick Links</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="index.html" class="text-gray-300 hover:text-primary transition">Home</a></li>
-                        <li><a href="select-class.html" class="text-gray-300 hover:text-primary transition">Select Class</a></li>
-                        <li><a href="about.html" class="text-gray-300 hover:text-primary transition">About Us</a></li>
-                        <li><a href="submit-review.html" class="text-gray-300 hover:text-primary transition">Leave a Review</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-3">Legal</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="privacy-policy.html" class="text-gray-300 hover:text-primary transition">Privacy Policy</a></li>
-                        <li><a href="terms.html" class="text-gray-300 hover:text-primary transition">Terms & Conditions</a></li>
-                        <li><a href="refund-policy.html" class="text-gray-300 hover:text-primary transition">Refund Policy</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-3">Contact</h4>
-                    <div class="space-y-2 text-sm text-gray-300">
-                        <p><i class="fas fa-phone-alt text-primary mr-2 w-5"></i> 0110049657</p>
-                        <p><i class="fas fa-phone-alt text-primary mr-2 w-5"></i> 0101349001</p>
-                        <p><i class="fas fa-envelope text-primary mr-2 w-5"></i> info@niconxlearning.co.ke</p>
-                    </div>
-                </div>
-            </div>
             <div class="border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
                 <p>&copy; 2026 NiconX Learning Hub. All rights reserved. | Learn. Practice. Shine.</p>
             </div>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        AOS.init({ duration: 800, once: true });
+        
         // Rating star functionality
         const stars = document.querySelectorAll('.rating-star');
         const ratingInput = document.getElementById('selectedRating');
@@ -180,7 +155,6 @@
                 const rating = parseInt(this.getAttribute('data-rating'));
                 ratingInput.value = rating;
                 
-                // Update star display
                 stars.forEach((s, index) => {
                     if (index < rating) {
                         s.classList.remove('far');
@@ -233,7 +207,6 @@
             const submitBtn = document.getElementById('submitBtn');
             const statusDiv = document.getElementById('formStatus');
             
-            // Validation
             if (!name) {
                 showStatus('Please enter your name', 'error');
                 return;
@@ -254,11 +227,9 @@
                 return;
             }
             
-            // Disable button
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse mr-2"></i> Submitting...';
             
-            // Save to localStorage (will be reviewed by admin)
             const reviews = JSON.parse(localStorage.getItem('niconx_reviews') || '[]');
             const newReview = {
                 id: Date.now().toString(),
@@ -266,17 +237,14 @@
                 location: location,
                 rating: rating,
                 comment: comment,
-                approved: false,  // Needs admin approval
+                approved: false,
                 date: new Date().toISOString()
             };
             
             reviews.unshift(newReview);
             localStorage.setItem('niconx_reviews', JSON.stringify(reviews));
             
-            // Show success message
             showStatus('Thank you for your review! It will be reviewed and published soon.', 'success');
-            
-            // Reset form
             document.getElementById('reviewForm').reset();
             ratingInput.value = 0;
             stars.forEach(star => {
@@ -284,11 +252,9 @@
                 star.classList.add('far');
             });
             
-            // Reset button
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Submit Review';
             
-            // Hide status after 5 seconds
             setTimeout(() => {
                 statusDiv.classList.add('hidden');
             }, 5000);
